@@ -105,3 +105,6 @@ ENV/
 
 # resource
 resource/
+
+# exe file
+*.exe
