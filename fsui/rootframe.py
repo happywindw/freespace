@@ -10,9 +10,9 @@ class RootFrame(wx.Frame):
 
         # self.SetSizeHintsSz(wx.DefaultSize, wx.DefaultSize)
 
-        self.CreateStatusBar()  # 创建窗口底部的状态栏
+        self.CreateStatusBar()
 
-        # 创建菜单及菜单项
+        # Create and set menu and menu items
         self.menu_file = wx.Menu()
         self.mi_add_video = wx.MenuItem(self.menu_file, wx.ID_ANY, 'Add Video...', 'Add a single video', wx.ITEM_NORMAL)
         self.mi_add_video_folder = wx.MenuItem(self.menu_file, wx.ID_ANY, 'Add Video Folder...',
@@ -26,7 +26,7 @@ class RootFrame(wx.Frame):
                                     wx.ITEM_NORMAL)
         self.menu_help.Append(self.mi_about)
 
-        # 创建并设置菜单栏
+        # Create and set a menu bar
         self.menu_bar = wx.MenuBar()
         self.menu_bar.Append(self.menu_file, 'File')
         self.menu_bar.Append(self.menu_help, 'Help')

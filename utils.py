@@ -8,7 +8,7 @@ def get_duration_definition(video_name):
     :return:
     """
     video_info = ffmpeg_parse_infos(video_name)
-    duration = int(video_info['duration'])   # 单位秒
+    duration = int(video_info['duration'])   # unit second
     video_size = video_info['video_size']
     return duration, video_size
 
