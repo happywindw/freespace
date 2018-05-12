@@ -14,10 +14,10 @@ class RootFrame(wx.Frame):
 
         # 创建菜单及菜单项
         self.menu_file = wx.Menu()
-        self.mi_add_video = wx.MenuItem(self.menu_file, wx.ID_ADD, 'Add Video...', 'Add a single video', wx.ITEM_NORMAL)
-        self.menu_file.Append(self.mi_add_video)
-        self.mi_add_video_folder = wx.MenuItem(self.menu_file, wx.ID_ADD, 'Add Video Folder...',
+        self.mi_add_video = wx.MenuItem(self.menu_file, wx.ID_ANY, 'Add Video...', 'Add a single video', wx.ITEM_NORMAL)
+        self.mi_add_video_folder = wx.MenuItem(self.menu_file, wx.ID_ANY, 'Add Video Folder...',
                                                'Add all videos in the folder and sub folders', wx.ITEM_NORMAL)
+        self.menu_file.Append(self.mi_add_video)
         self.menu_file.Append(self.mi_add_video_folder)
         self.menu_file.AppendSeparator()
 
@@ -33,13 +33,21 @@ class RootFrame(wx.Frame):
         self.SetMenuBar(self.menu_bar)
 
         self.Centre(wx.BOTH)
-        self.Show()
+
+        # Connect Events
+        self.Bind(wx.EVT_MENU, self.mf_add_video, id=self.mi_add_video.GetId())
+        self.Bind(wx.EVT_MENU, self.mf_add_video_folder, id=self.mi_add_video_folder.GetId())
+        self.Bind(wx.EVT_MENU, self.mh_about, id=self.mi_about.GetId())
 
     def __del__(self):
         pass
 
+    # Virtual event handlers, override them in derived class
+    def mf_add_video(self, event):
+        event.Skip()
 
-# for test
-app = wx.App(False)
-frame = RootFrame(None)
-app.MainLoop()
+    def mf_add_video_folder(self, event):
+        event.Skip()
+
+    def mh_about(self, event):
+        event.Skip()
