@@ -32,6 +32,22 @@ class RootFrame(wx.Frame):
         self.menu_bar.Append(self.menu_help, 'Help')
         self.SetMenuBar(self.menu_bar)
 
+        root_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        self.top_panel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.top_panel.SetMaxSize(wx.Size(-1, 100))
+        root_sizer.Add(self.top_panel, 1, wx.EXPAND | wx.ALL, 5)
+
+        self.notebook = wx.Notebook(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.main_page_panel = wx.Panel(self.notebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.notebook.AddPage(self.main_page_panel, u"Main page", False)
+        self.movie_page_panel = wx.Panel(self.notebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.notebook.AddPage(self.movie_page_panel, u"Movie page", False)
+        self.video_page_panel = wx.Panel(self.notebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.notebook.AddPage(self.video_page_panel, u"Video page", False)
+
+        root_sizer.Add(self.notebook, 1, wx.EXPAND | wx.ALL, 5)
+
         self.Centre(wx.BOTH)
 
         # Connect Events
