@@ -27,12 +27,12 @@ class RootFrame(wx.Frame):
 
         self.root_listbook = wx.Listbook(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LB_TOP)
         self.home_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        self.root_listbook.AddPage(self.home_panel, u"Home", True)
+        self.root_listbook.AddPage(self.home_panel, u"Home", False)
         self.movie_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         movie_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.movie_notebook = wx.Notebook(self.movie_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
-                                          wx.NB_BOTTOM | wx.NB_FIXEDWIDTH)
+                                          wx.NB_FIXEDWIDTH | wx.NB_TOP)
         self.rider_panel = wx.Panel(self.movie_notebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                     wx.TAB_TRAVERSAL)
         self.movie_notebook.AddPage(self.rider_panel, u"Rider", True)
@@ -43,12 +43,12 @@ class RootFrame(wx.Frame):
                                      wx.TAB_TRAVERSAL)
         self.movie_notebook.AddPage(self.lancer_panel, u"Lancer", False)
 
-        movie_sizer.Add(self.movie_notebook, 1, wx.EXPAND | wx.ALL, 5)
+        movie_sizer.Add(self.movie_notebook, 1, wx.EXPAND | wx.ALL, 0)
 
         self.movie_panel.SetSizer(movie_sizer)
         self.movie_panel.Layout()
         movie_sizer.Fit(self.movie_panel)
-        self.root_listbook.AddPage(self.movie_panel, u"Movie", False)
+        self.root_listbook.AddPage(self.movie_panel, u"Movie", True)
         self.video_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         self.root_listbook.AddPage(self.video_panel, u"Video", False)
         self.cartoon_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
