@@ -25,15 +25,14 @@ class RootFrame(wx.Frame):
 
         root_sizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.root_list_book = wx.Listbook(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LB_TOP)
-        self.home_panel = wx.Panel(self.root_list_book, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        self.root_list_book.AddPage(self.home_panel, u"Home", False)
-        self.movie_panel = wx.Panel(self.root_list_book, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
-                                    wx.TAB_TRAVERSAL)
+        self.root_listbook = wx.Listbook(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LB_TOP)
+        self.home_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.root_listbook.AddPage(self.home_panel, u"Home", True)
+        self.movie_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         movie_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.movie_notebook = wx.Notebook(self.movie_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
-                                          wx.NB_FIXEDWIDTH | wx.NB_LEFT)
+                                          wx.NB_BOTTOM | wx.NB_FIXEDWIDTH)
         self.rider_panel = wx.Panel(self.movie_notebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                     wx.TAB_TRAVERSAL)
         self.movie_notebook.AddPage(self.rider_panel, u"Rider", True)
@@ -49,18 +48,16 @@ class RootFrame(wx.Frame):
         self.movie_panel.SetSizer(movie_sizer)
         self.movie_panel.Layout()
         movie_sizer.Fit(self.movie_panel)
-        self.root_list_book.AddPage(self.movie_panel, u"Movie", True)
-        self.video_panel = wx.Panel(self.root_list_book, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
-                                    wx.TAB_TRAVERSAL)
-        self.root_list_book.AddPage(self.video_panel, u"Video", False)
-        self.cartoon_panel = wx.Panel(self.root_list_book, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+        self.root_listbook.AddPage(self.movie_panel, u"Movie", False)
+        self.video_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.root_listbook.AddPage(self.video_panel, u"Video", False)
+        self.cartoon_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                       wx.TAB_TRAVERSAL)
-        self.root_list_book.AddPage(self.cartoon_panel, u"Cartoon", False)
-        self.comic_panel = wx.Panel(self.root_list_book, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
-                                    wx.TAB_TRAVERSAL)
-        self.root_list_book.AddPage(self.comic_panel, u"Comic", False)
+        self.root_listbook.AddPage(self.cartoon_panel, u"Cartoon", False)
+        self.comic_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.root_listbook.AddPage(self.comic_panel, u"Comic", False)
 
-        root_sizer.Add(self.root_list_book, 1, wx.EXPAND | wx.ALL, 0)
+        root_sizer.Add(self.root_listbook, 1, wx.EXPAND | wx.ALL, 0)
 
         self.SetSizer(root_sizer)
         self.Layout()
