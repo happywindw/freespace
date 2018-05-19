@@ -21,7 +21,7 @@ class RootFrame(wx.Frame):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=u"FreeSpace", pos=wx.DefaultPosition, size=wx.Size(-1, -1),
                           style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE | wx.TAB_TRAVERSAL)
 
-        self.SetSizeHints(wx.Size(800, 600), wx.DefaultSize)
+        self.SetSizeHints(wx.Size(1200, 800), wx.DefaultSize)
 
         root_sizer = wx.BoxSizer(wx.VERTICAL)
 

@@ -6,5 +6,6 @@ DB_DICT = {
     'username': 'root',
     'password': 'root123',
     'host': 'localhost',
-    'db_name': 'free_space'
+    'db_name': 'free_space',
+    'charset': 'utf8mb4'
 }
