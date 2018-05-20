@@ -45,7 +45,7 @@
             <property name="name">RootFrame</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
-            <property name="style">wxDEFAULT_FRAME_STYLE</property>
+            <property name="style">wxDEFAULT_FRAME_STYLE|wxMAXIMIZE</property>
             <property name="subclass">; forward_declare</property>
             <property name="title">FreeSpace</property>
             <property name="tooltip"></property>
