@@ -19,9 +19,9 @@ class RootFrame(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=u"FreeSpace", pos=wx.DefaultPosition, size=wx.Size(-1, -1),
-                          style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE | wx.TAB_TRAVERSAL)
+                          style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
-        self.SetSizeHints(wx.Size(1200, 800), wx.Size(1900, 1000))
+        self.SetSizeHints(wx.Size(1200, 800), wx.Size(-1, -1))
 
         root_sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -102,131 +102,6 @@ class RootFrame(wx.Frame):
         self.rcp_scrolled_window = wx.ScrolledWindow(self.rider_content_panel, wx.ID_ANY, wx.DefaultPosition,
                                                      wx.DefaultSize, wx.HSCROLL | wx.VSCROLL)
         self.rcp_scrolled_window.SetScrollRate(5, 20)
-        rcp_pic_sizer = wx.GridSizer(5, 6, 0, 0)
-
-        self.rcp_pic_01 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_01, 0, wx.ALL, 5)
-
-        self.rcp_pic_02 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_02, 0, wx.ALL, 5)
-
-        self.rcp_pic_03 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_03, 0, wx.ALL, 5)
-
-        self.rcp_pic_04 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_04, 0, wx.ALL, 5)
-
-        self.rcp_pic_05 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_05, 0, wx.ALL, 5)
-
-        self.rcp_pic_06 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_06, 0, wx.ALL, 5)
-
-        self.rcp_pic_07 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_07, 0, wx.ALL, 5)
-
-        self.rcp_pic_08 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_08, 0, wx.ALL, 5)
-
-        self.rcp_pic_09 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_09, 0, wx.ALL, 5)
-
-        self.rcp_pic_10 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_10, 0, wx.ALL, 5)
-
-        self.rcp_pic_11 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_11, 0, wx.ALL, 5)
-
-        self.rcp_pic_12 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_12, 0, wx.ALL, 5)
-
-        self.rcp_pic_13 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_13, 0, wx.ALL, 5)
-
-        self.rcp_pic_14 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_14, 0, wx.ALL, 5)
-
-        self.rcp_pic_15 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_15, 0, wx.ALL, 5)
-
-        self.rcp_pic_16 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_16, 0, wx.ALL, 5)
-
-        self.rcp_pic_17 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_17, 0, wx.ALL, 5)
-
-        self.rcp_pic_18 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_18, 0, wx.ALL, 5)
-
-        self.rcp_pic_19 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_19, 0, wx.ALL, 5)
-
-        self.rcp_pic_20 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_20, 0, wx.ALL, 5)
-
-        self.rcp_pic_21 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_21, 0, wx.ALL, 5)
-
-        self.rcp_pic_22 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_22, 0, wx.ALL, 5)
-
-        self.rcp_pic_23 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_23, 0, wx.ALL, 5)
-
-        self.rcp_pic_24 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_24, 0, wx.ALL, 5)
-
-        self.rcp_pic_25 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_25, 0, wx.ALL, 5)
-
-        self.rcp_pic_26 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_26, 0, wx.ALL, 5)
-
-        self.rcp_pic_27 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_27, 0, wx.ALL, 5)
-
-        self.rcp_pic_28 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_28, 0, wx.ALL, 5)
-
-        self.rcp_pic_29 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_29, 0, wx.ALL, 5)
-
-        self.rcp_pic_30 = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                          wx.Size(250, 356), wx.BU_AUTODRAW)
-        rcp_pic_sizer.Add(self.rcp_pic_30, 0, wx.ALL, 5)
-
-        self.rcp_scrolled_window.SetSizer(rcp_pic_sizer)
-        self.rcp_scrolled_window.Layout()
-        rcp_pic_sizer.Fit(self.rcp_scrolled_window)
         bSizer16.Add(self.rcp_scrolled_window, 1, wx.EXPAND | wx.ALL, 5)
 
         self.rider_content_panel.SetSizer(bSizer16)
