@@ -8,12 +8,16 @@ class MainWindow(RootFrame):
         self.show_rider_pictures()
 
     def show_rider_pictures(self):
-        rcp_pic_sizer = wx.GridSizer(2, 6, 0, 0)
+        print(self.rcp_scrolled_window.GetSize())
+        row_count = (self.rcp_scrolled_window.GetSize()[0] - 10) // 252
+        col_count = 30 // row_count
+        print(row_count, col_count)
+        rcp_pic_sizer = wx.GridSizer(col_count, row_count, 1, 1)
         i = 0
-        while i < 7:
+        while i < row_count * col_count:
             picture = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
                                       wx.Size(250, 356), wx.BU_AUTODRAW)
-            rcp_pic_sizer.Add(picture, 0, wx.ALL, 5)
+            rcp_pic_sizer.Add(picture, 0, wx.ALL, 1)
 
             bitmap = wx.Bitmap('./resource/test.jpg', wx.BITMAP_TYPE_JPEG)
             picture.SetBitmap(bitmap)

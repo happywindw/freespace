@@ -41,7 +41,7 @@
             <property name="hidden">0</property>
             <property name="id">wxID_ANY</property>
             <property name="maximum_size">-1,-1</property>
-            <property name="minimum_size">1155,705</property>
+            <property name="minimum_size">1200,700</property>
             <property name="name">RootFrame</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
@@ -591,8 +591,8 @@
                                                                 <event name="OnSplitterSashPosChanging"></event>
                                                                 <event name="OnSplitterUnsplit"></event>
                                                                 <event name="OnUpdateUI"></event>
-                                                                <object class="splitteritem" expanded="0">
-                                                                    <object class="wxPanel" expanded="0">
+                                                                <object class="splitteritem" expanded="1">
+                                                                    <object class="wxPanel" expanded="1">
                                                                         <property name="BottomDockable">1</property>
                                                                         <property name="LeftDockable">1</property>
                                                                         <property name="RightDockable">1</property>
@@ -984,7 +984,7 @@
                                                                                     <property name="tooltip"></property>
                                                                                     <property name="window_extra_style"></property>
                                                                                     <property name="window_name"></property>
-                                                                                    <property name="window_style">wxTAB_TRAVERSAL</property>
+                                                                                    <property name="window_style">wxNO_BORDER|wxTAB_TRAVERSAL</property>
                                                                                     <event name="OnChar"></event>
                                                                                     <event name="OnEnterWindow"></event>
                                                                                     <event name="OnEraseBackground"></event>
@@ -1010,7 +1010,7 @@
                                                                                     <event name="OnUpdateUI"></event>
                                                                                     <object class="wxBoxSizer" expanded="1">
                                                                                         <property name="minimum_size"></property>
-                                                                                        <property name="name">bSizer16</property>
+                                                                                        <property name="name">rcp_content_sizer</property>
                                                                                         <property name="orient">wxVERTICAL</property>
                                                                                         <property name="permission">none</property>
                                                                                         <object class="sizeritem" expanded="1">
@@ -1619,7 +1619,7 @@
                                                                                             </object>
                                                                                         </object>
                                                                                         <object class="sizeritem" expanded="1">
-                                                                                            <property name="border">5</property>
+                                                                                            <property name="border">0</property>
                                                                                             <property name="flag">wxEXPAND | wxALL</property>
                                                                                             <property name="proportion">1</property>
                                                                                             <object class="wxScrolledWindow" expanded="1">

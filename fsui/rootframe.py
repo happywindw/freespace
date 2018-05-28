@@ -21,7 +21,7 @@ class RootFrame(wx.Frame):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=u"FreeSpace", pos=wx.DefaultPosition, size=wx.Size(-1, -1),
                           style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE | wx.TAB_TRAVERSAL)
 
-        self.SetSizeHints(wx.Size(1155, 705), wx.Size(-1, -1))
+        self.SetSizeHints(wx.Size(1200, 700), wx.Size(-1, -1))
 
         root_sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -61,8 +61,8 @@ class RootFrame(wx.Frame):
         rrp_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.rider_content_panel = wx.Panel(self.rider_right_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
-                                            wx.TAB_TRAVERSAL)
-        bSizer16 = wx.BoxSizer(wx.VERTICAL)
+                                            wx.NO_BORDER | wx.TAB_TRAVERSAL)
+        rcp_content_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.rcp_page_panel = wx.Panel(self.rider_content_panel, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1, 50),
                                        wx.TAB_TRAVERSAL)
@@ -97,16 +97,16 @@ class RootFrame(wx.Frame):
 
         self.rcp_page_panel.SetSizer(rcp_page_sizer)
         self.rcp_page_panel.Layout()
-        bSizer16.Add(self.rcp_page_panel, 1, wx.EXPAND | wx.ALL, 5)
+        rcp_content_sizer.Add(self.rcp_page_panel, 1, wx.EXPAND | wx.ALL, 5)
 
         self.rcp_scrolled_window = wx.ScrolledWindow(self.rider_content_panel, wx.ID_ANY, wx.DefaultPosition,
                                                      wx.DefaultSize, wx.HSCROLL | wx.SIMPLE_BORDER | wx.VSCROLL)
         self.rcp_scrolled_window.SetScrollRate(5, 20)
-        bSizer16.Add(self.rcp_scrolled_window, 1, wx.EXPAND | wx.ALL, 5)
+        rcp_content_sizer.Add(self.rcp_scrolled_window, 1, wx.EXPAND | wx.ALL, 0)
 
-        self.rider_content_panel.SetSizer(bSizer16)
+        self.rider_content_panel.SetSizer(rcp_content_sizer)
         self.rider_content_panel.Layout()
-        bSizer16.Fit(self.rider_content_panel)
+        rcp_content_sizer.Fit(self.rider_content_panel)
         rrp_sizer.Add(self.rider_content_panel, 1, wx.EXPAND | wx.ALL, 5)
 
         self.rider_right_panel.SetSizer(rrp_sizer)
