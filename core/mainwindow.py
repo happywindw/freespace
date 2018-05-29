@@ -26,6 +26,14 @@ class MainWindow(RootFrame):
         self.rlp_tabs_panel.Layout()
         rlp_tabs_sizer.Fit(self.rlp_tabs_panel)
 
+        rlp_actor_sizer = wx.WrapSizer()
+        for ac in tl:
+            rb = wx.RadioButton(self.rlp_actor_panel, wx.ID_ANY, ac, wx.DefaultPosition, wx.DefaultSize, 0)
+            rlp_actor_sizer.Add(rb, 0, wx.ALL, 1)
+        self.rlp_actor_panel.SetSizer(rlp_actor_sizer)
+        self.rlp_actor_panel.Layout()
+        rlp_actor_sizer.Fit(self.rlp_actor_panel)
+
         # show pictures on rcp_scrolled_window
         width, height = self.rcp_scrolled_window.GetSize()
         col_count = math.floor((width - 20) / settings.PICTURE_SIZE['rider'][0])
@@ -61,5 +69,4 @@ class MainWindow(RootFrame):
     def on_mm_add_movie_folder(self, event):
         print('here')
         pass
-
 

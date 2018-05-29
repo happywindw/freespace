@@ -80,6 +80,29 @@ class RootFrame(wx.Frame):
 
         rlpsa_sizer = wx.BoxSizer(wx.VERTICAL)
 
+        self.rlp_actor = wx.Panel(self.rlp_scrolled_window, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1, -1),
+                                  wx.TAB_TRAVERSAL)
+        self.rlp_actor.SetMaxSize(wx.Size(-1, 22))
+
+        rlp_actor_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.rlp_actor_bmp = wx.StaticBitmap(self.rlp_actor, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
+                                             wx.Size(20, 20), 0)
+        rlp_actor_sizer.Add(self.rlp_actor_bmp, 0, wx.ALL, 1)
+
+        self.rlp_actor_text = wx.StaticText(self.rlp_actor, wx.ID_ANY, u"Actor", wx.DefaultPosition, wx.Size(-1, -1), 0)
+        self.rlp_actor_text.Wrap(-1)
+        rlp_actor_sizer.Add(self.rlp_actor_text, 0, wx.ALL, 1)
+
+        self.rlp_actor.SetSizer(rlp_actor_sizer)
+        self.rlp_actor.Layout()
+        rlp_actor_sizer.Fit(self.rlp_actor)
+        rlpsa_sizer.Add(self.rlp_actor, 1, wx.EXPAND | wx.ALL, 1)
+
+        self.rlp_actor_panel = wx.Panel(self.rlp_scrolled_window, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                        wx.TAB_TRAVERSAL)
+        rlpsa_sizer.Add(self.rlp_actor_panel, 1, wx.EXPAND | wx.ALL, 5)
+
         rlps_sizer.Add(rlpsa_sizer, 1, wx.EXPAND, 5)
 
         self.rlp_scrolled_window.SetSizer(rlps_sizer)
