@@ -49,6 +49,42 @@ class RootFrame(wx.Frame):
         self.rlp_scrolled_window = wx.ScrolledWindow(self.rider_left_panel, wx.ID_ANY, wx.DefaultPosition,
                                                      wx.DefaultSize, wx.DOUBLE_BORDER | wx.HSCROLL | wx.VSCROLL)
         self.rlp_scrolled_window.SetScrollRate(5, 15)
+        rlps_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        rlpst_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        self.rlp_tabs = wx.Panel(self.rlp_scrolled_window, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1, -1),
+                                 wx.TAB_TRAVERSAL)
+        self.rlp_tabs.SetMaxSize(wx.Size(-1, 22))
+
+        rlp_tabs_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.rlp_tabs_bmp = wx.StaticBitmap(self.rlp_tabs, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
+                                            wx.Size(20, 20), 0)
+        rlp_tabs_sizer.Add(self.rlp_tabs_bmp, 0, wx.ALL, 1)
+
+        self.rlp_tabs_text = wx.StaticText(self.rlp_tabs, wx.ID_ANY, u"Tabs", wx.DefaultPosition, wx.Size(-1, -1), 0)
+        self.rlp_tabs_text.Wrap(-1)
+        rlp_tabs_sizer.Add(self.rlp_tabs_text, 0, wx.ALL, 1)
+
+        self.rlp_tabs.SetSizer(rlp_tabs_sizer)
+        self.rlp_tabs.Layout()
+        rlp_tabs_sizer.Fit(self.rlp_tabs)
+        rlpst_sizer.Add(self.rlp_tabs, 1, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 1)
+
+        self.rlp_tabs_panel = wx.Panel(self.rlp_scrolled_window, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                       wx.TAB_TRAVERSAL)
+        rlpst_sizer.Add(self.rlp_tabs_panel, 1, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 1)
+
+        rlps_sizer.Add(rlpst_sizer, 1, wx.EXPAND, 5)
+
+        rlpsa_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        rlps_sizer.Add(rlpsa_sizer, 1, wx.EXPAND, 5)
+
+        self.rlp_scrolled_window.SetSizer(rlps_sizer)
+        self.rlp_scrolled_window.Layout()
+        rlps_sizer.Fit(self.rlp_scrolled_window)
         rlp_sizer.Add(self.rlp_scrolled_window, 1, wx.EXPAND | wx.ALL, 0)
 
         self.rider_left_panel.SetSizer(rlp_sizer)
