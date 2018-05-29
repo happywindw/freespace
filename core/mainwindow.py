@@ -49,6 +49,18 @@ class MainWindow(RootFrame):
         self.rcp_scrolled_window.Layout()
         rcp_pic_sizer.Fit(self.rcp_scrolled_window)
 
+    def on_show_hide_panel(self, event):
+        ob = event.GetEventObject()
+        tb = None
+        if ob is self.rlp_tabs or ob.GetParent() is self.rlp_tabs:
+            tb = self.rlp_tabs_panel
+        elif ob is self.rlp_actor or ob.GetParent() is self.rlp_actor:
+            tb = self.rlp_actor_panel
+        if tb.IsShown():
+            tb.Hide()
+        else:
+            tb.Show()
+
     def on_mh_about(self, event):
         """
         menu->help->about

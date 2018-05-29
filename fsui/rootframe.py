@@ -229,6 +229,8 @@ class RootFrame(wx.Frame):
         self.Centre(wx.BOTH)
 
         # Connect Events
+        self.rlp_tabs.Bind(wx.EVT_LEFT_UP, self.on_show_hide_panel)
+        self.rlp_actor_text.Bind(wx.EVT_LEFT_UP, self.on_show_hide_panel)
         self.Bind(wx.EVT_MENU, self.on_mm_add_movie, id=self.mm_add_movie.GetId())
         self.Bind(wx.EVT_MENU, self.on_mm_add_movie_folder, id=self.mm_add_folder.GetId())
         self.Bind(wx.EVT_MENU, self.on_mh_about, id=self.mh_about.GetId())
@@ -237,6 +239,9 @@ class RootFrame(wx.Frame):
         pass
 
     # Virtual event handlers, overide them in your derived class
+    def on_show_hide_panel(self, event):
+        event.Skip()
+
     def on_mm_add_movie(self, event):
         event.Skip()
 
