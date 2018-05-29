@@ -9,3 +9,7 @@ DB_DICT = {
     'db_name': 'free_space',
     'charset': 'utf8mb4'
 }
+
+PICTURE_SIZE = {
+    'rider': (250, 356)
+}
