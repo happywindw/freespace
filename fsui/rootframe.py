@@ -44,18 +44,16 @@ class RootFrame(wx.Frame):
 
         self.rider_left_panel = wx.Panel(self.rider_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                          wx.TAB_TRAVERSAL)
-        wSizer1 = wx.WrapSizer(wx.HORIZONTAL)
+        rlp_sizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.m_button9 = wx.Button(self.rider_left_panel, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0)
-        wSizer1.Add(self.m_button9, 0, wx.ALL, 5)
+        self.rlp_scrolled_window = wx.ScrolledWindow(self.rider_left_panel, wx.ID_ANY, wx.DefaultPosition,
+                                                     wx.DefaultSize, wx.DOUBLE_BORDER | wx.HSCROLL | wx.VSCROLL)
+        self.rlp_scrolled_window.SetScrollRate(5, 15)
+        rlp_sizer.Add(self.rlp_scrolled_window, 1, wx.EXPAND | wx.ALL, 0)
 
-        self.m_button10 = wx.Button(self.rider_left_panel, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize,
-                                    0)
-        wSizer1.Add(self.m_button10, 0, wx.ALL, 5)
-
-        self.rider_left_panel.SetSizer(wSizer1)
+        self.rider_left_panel.SetSizer(rlp_sizer)
         self.rider_left_panel.Layout()
-        wSizer1.Fit(self.rider_left_panel)
+        rlp_sizer.Fit(self.rider_left_panel)
         self.rider_right_panel = wx.Panel(self.rider_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                           wx.TAB_TRAVERSAL)
         rrp_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -100,7 +98,7 @@ class RootFrame(wx.Frame):
         rcp_content_sizer.Add(self.rcp_page_panel, 1, wx.EXPAND | wx.ALL, 5)
 
         self.rcp_scrolled_window = wx.ScrolledWindow(self.rider_content_panel, wx.ID_ANY, wx.DefaultPosition,
-                                                     wx.DefaultSize, wx.HSCROLL | wx.SIMPLE_BORDER | wx.VSCROLL)
+                                                     wx.DefaultSize, wx.DOUBLE_BORDER | wx.HSCROLL | wx.VSCROLL)
         self.rcp_scrolled_window.SetScrollRate(5, 20)
         rcp_content_sizer.Add(self.rcp_scrolled_window, 1, wx.EXPAND | wx.ALL, 0)
 

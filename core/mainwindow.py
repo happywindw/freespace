@@ -9,6 +9,9 @@ class MainWindow(RootFrame):
         super().__init__(parent)
         self.show_rider_pictures(25)
 
+    def show_rider_tabs(self):
+        pass
+
     def show_rider_pictures(self, pic_count=30):
         """
         show pictures
@@ -35,6 +38,7 @@ class MainWindow(RootFrame):
     def on_mh_about(self, event):
         md = wx.MessageDialog(self, 'FreeSpace v1.0\n©2018-2019 Louis Young. All Rights Reserved.',
                               'About FreeSpace', wx.OK | wx.ICON_QUESTION)
+        md.ShowModal()
         md.Destroy()
 
     def on_mm_add_movie(self, event):

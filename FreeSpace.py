@@ -3,5 +3,5 @@ from core.mainwindow import MainWindow
 
 fs_app = wx.App(False)
 fs_main_window = MainWindow(None)
-fs_main_window.ShowFullScreen(True, wx.FULLSCREEN_NOMENUBAR)
+fs_main_window.ShowFullScreen(True, wx.FULLSCREEN_NOTOOLBAR)
 fs_app.MainLoop()
