@@ -44,10 +44,9 @@ class MainWindow(RootFrame):
         elif sm_page == 3:  # 'Caster' page
             pass
 
-    def show_movie_rider_page(self, pic_count=30):
+    def show_movie_rider_page(self):
         """
         show contents of the Movie->Rider page
-        :param pic_count:
         :return:
         """
         # show widgets on rlp_tabs_panel
@@ -70,6 +69,7 @@ class MainWindow(RootFrame):
         rlp_actor_sizer.Fit(self.rlp_actor_panel)
 
         # show pictures on rcp_scrolled_window
+        pic_count = 30
         width, height = self.rcp_scrolled_window.GetSize()
         col_count = math.floor((width - 20) / settings.PICTURE_SIZE['rider'][0])
         row_count = math.ceil(pic_count / col_count)
@@ -101,6 +101,28 @@ class MainWindow(RootFrame):
         else:
             tb.Show()
 
+    def on_mm_add_movie(self, event):
+        """
+        menu->movie->Add Movie...
+        :param event:
+        :return:
+        """
+        fd = wx.FileDialog(self, 'Choose a movie file...')
+        if fd.ShowModal() == wx.ID_OK:
+            print('choose file')
+        fd.Destroy()
+
+    def on_mm_add_movie_folder(self, event):
+        """
+        menu->movie->Add Movie Folder...
+        :param event:
+        :return:
+        """
+        dd = wx.DirDialog(self, 'Choose a movie dir...')
+        if dd.ShowModal() == wx.ID_OK:
+            print('choose dir')
+        dd.Destroy()
+
     def on_mh_about(self, event):
         """
         menu->help->About
@@ -111,24 +133,3 @@ class MainWindow(RootFrame):
                               'About FreeSpace', wx.OK | wx.ICON_QUESTION)
         md.ShowModal()
         md.Destroy()
-
-    def on_mm_add_movie(self, event):
-        """
-        menu->movie->Add Movie...
-        :param event:
-        :return:
-        """
-        fd = wx.FileDialog(self, 'Add a Single Video File')
-        if fd.ShowModal() == wx.ID_OK:
-            print('ssss')
-        fd.Destroy()
-
-    def on_mm_add_movie_folder(self, event):
-        """
-        menu->movie->Add Movie Folder...
-        :param event:
-        :return:
-        """
-        print('here')
-        pass
-
