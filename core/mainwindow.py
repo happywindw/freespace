@@ -54,8 +54,12 @@ class MainWindow(RootFrame):
         """
         sm_page = self.movie_notebook.GetSelection()
         if sm_page == 0:    # 'Rider' page
-            self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg'])
-            # self.show_movie_rider_page()
+            self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                                            'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                                            'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                                            'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                                            'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', ])
+            # self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg'])
         elif sm_page == 1:  # 'Saber' page
             pass
         elif sm_page == 2:  # 'Lancer' page
@@ -98,10 +102,13 @@ class MainWindow(RootFrame):
             self.rcp_scrolled_window.RemoveChild(child)
 
         # calculate row and column counts
-        width, height = self.rcp_scrolled_window.GetSize()
-        col_count = math.floor((width - 20) / settings.PICTURE_SIZE['rider'][0])
-        row_count = math.ceil(len(pic_list) / col_count)
-        rp_sizer = wx.GridSizer(row_count, col_count, 1, 1)
+        width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
+        self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
+        print(width)
+        col_count = min(math.floor(width / settings.PICTURE_SIZE['rider'][0]), max(len(pic_list), 1))
+        row_count = max(math.ceil(len(pic_list) / col_count), 1)
+        print(row_count, col_count)
+        rp_sizer = wx.GridSizer(row_count, col_count, 0, 0)
 
         # put pictures on rcp_scrolled_window
         for pic in pic_list:
@@ -109,9 +116,12 @@ class MainWindow(RootFrame):
             sb = wx.StaticBitmap(self.rcp_scrolled_window, wx.ID_ANY, bitmap, wx.DefaultPosition,
                                  wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
             rp_sizer.Add(sb, 0, wx.ALL, 1)
+
         self.rcp_scrolled_window.SetSizer(rp_sizer)
         self.rcp_scrolled_window.Layout()
         rp_sizer.Fit(self.rcp_scrolled_window)
+        # self.rcp_scrolled_window.Update()
+        # self.Layout()
 
     def mr_show_hide_panel(self, event):
         """
