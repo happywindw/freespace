@@ -7,7 +7,8 @@ from fsui.rootframe import RootFrame
 class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        tl = ['你好', '我不知道', '是的吗', '再见', '我要爬山去', '这是个问题', '过来', '一起么', '哈哈哈哈哈']
+        tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
+              'do you think so', 'yes i do']
         self.show_rider_contents(tl, 25)
 
     def show_rider_contents(self, tl, pic_count=30):
@@ -50,6 +51,11 @@ class MainWindow(RootFrame):
         rcp_pic_sizer.Fit(self.rcp_scrolled_window)
 
     def on_show_hide_panel(self, event):
+        """
+        show or hide a tab rlp panel when user click these panels
+        :param event:
+        :return:
+        """
         ob = event.GetEventObject()
         tb = None
         if ob is self.rlp_tabs or ob.GetParent() is self.rlp_tabs:
@@ -63,7 +69,7 @@ class MainWindow(RootFrame):
 
     def on_mh_about(self, event):
         """
-        menu->help->about
+        menu->help->About
         :param event:
         :return:
         """
@@ -73,12 +79,22 @@ class MainWindow(RootFrame):
         md.Destroy()
 
     def on_mm_add_movie(self, event):
+        """
+        menu->movie->Add Movie...
+        :param event:
+        :return:
+        """
         fd = wx.FileDialog(self, 'Add a Single Video File')
         if fd.ShowModal() == wx.ID_OK:
             print('ssss')
         fd.Destroy()
 
     def on_mm_add_movie_folder(self, event):
+        """
+        menu->movie->Add Movie Folder...
+        :param event:
+        :return:
+        """
         print('here')
         pass
 
