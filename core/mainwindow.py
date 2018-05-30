@@ -8,6 +8,24 @@ class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
+        self.init_movie_page()
+
+    def init_home_page(self):
+        pass
+
+    def init_movie_page(self):
+        tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
+              'do you think so', 'yes i do']
+        self.load_movie_rider_tabs(tl, self.rlp_tabs_panel)
+        self.load_movie_rider_tabs(tl, self.rlp_actor_panel)
+
+        pic_list = ['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
+                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg']
+        self.load_movie_rider_pictures(pic_list)
+
     def on_page_changed(self, event):
         """
         Switch between pages of the main window
@@ -36,7 +54,8 @@ class MainWindow(RootFrame):
         """
         sm_page = self.movie_notebook.GetSelection()
         if sm_page == 0:    # 'Rider' page
-            self.show_movie_rider_page()
+            self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg'])
+            # self.show_movie_rider_page()
         elif sm_page == 1:  # 'Saber' page
             pass
         elif sm_page == 2:  # 'Lancer' page
@@ -44,45 +63,55 @@ class MainWindow(RootFrame):
         elif sm_page == 3:  # 'Caster' page
             pass
 
-    def show_movie_rider_page(self):
+    def load_movie_rider_tabs(self, tab_list, tab_panel):
         """
-        show contents of the Movie->Rider page
+        a universal method to load and show tabs on specified tab panel
+        :param tab_list:
+        :param tab_panel:
         :return:
         """
-        # show widgets on rlp_tabs_panel
-        tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
-              'do you think so', 'yes i do']
-        rlp_tabs_sizer = wx.WrapSizer()
-        for i in range(len(tl)):
-            cb = wx.CheckBox(self.rlp_tabs_panel, wx.ID_ANY, tl[i], wx.DefaultPosition, wx.DefaultSize, 0)
-            rlp_tabs_sizer.Add(cb, 0, wx.ALL, 1)
-        self.rlp_tabs_panel.SetSizer(rlp_tabs_sizer)
-        self.rlp_tabs_panel.Layout()
-        rlp_tabs_sizer.Fit(self.rlp_tabs_panel)
+        # remove children widgets first
+        for child in tab_panel.GetChildren():
+            tab_panel.RemoveChild(child)
 
-        rlp_actor_sizer = wx.WrapSizer()
-        for ac in tl:
-            rb = wx.RadioButton(self.rlp_actor_panel, wx.ID_ANY, ac, wx.DefaultPosition, wx.DefaultSize, 0)
-            rlp_actor_sizer.Add(rb, 0, wx.ALL, 1)
-        self.rlp_actor_panel.SetSizer(rlp_actor_sizer)
-        self.rlp_actor_panel.Layout()
-        rlp_actor_sizer.Fit(self.rlp_actor_panel)
+        rt_sizer = wx.WrapSizer()
+        if tab_panel is self.rlp_tabs_panel:
+            for tab in tab_list:
+                cb = wx.CheckBox(self.rlp_tabs_panel, wx.ID_ANY, tab, wx.DefaultPosition, wx.DefaultSize, 0)
+                rt_sizer.Add(cb, 0, wx.ALL, 1)
+        else:
+            for tab in tab_list:
+                rb = wx.RadioButton(self.rlp_actor_panel, wx.ID_ANY, tab, wx.DefaultPosition, wx.DefaultSize, 0)
+                rt_sizer.Add(rb, 0, wx.ALL, 1)
+        tab_panel.SetSizer(rt_sizer)
+        tab_panel.Layout()
+        rt_sizer.Fit(tab_panel)
 
-        # show pictures on rcp_scrolled_window
-        pic_count = 30
+    def load_movie_rider_pictures(self, pic_list):
+        """
+        load and show pictures on rcp_scrolled_window
+        :param pic_list: picture location list
+        :return:
+        """
+        # remove children widgets first
+        for child in self.rcp_scrolled_window.GetChildren():
+            self.rcp_scrolled_window.RemoveChild(child)
+
+        # calculate row and column counts
         width, height = self.rcp_scrolled_window.GetSize()
         col_count = math.floor((width - 20) / settings.PICTURE_SIZE['rider'][0])
-        row_count = math.ceil(pic_count / col_count)
-        rcp_pic_sizer = wx.GridSizer(row_count, col_count, 1, 1)
-        for i in range(pic_count):
-            picture = wx.BitmapButton(self.rcp_scrolled_window, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition,
-                                      wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
-            rcp_pic_sizer.Add(picture, 0, wx.ALL, 1)
-            bitmap = wx.Bitmap('./resource/test.jpg', wx.BITMAP_TYPE_JPEG)
-            picture.SetBitmap(bitmap)
-        self.rcp_scrolled_window.SetSizer(rcp_pic_sizer)
+        row_count = math.ceil(len(pic_list) / col_count)
+        rp_sizer = wx.GridSizer(row_count, col_count, 1, 1)
+
+        # put pictures on rcp_scrolled_window
+        for pic in pic_list:
+            bitmap = wx.Bitmap(pic, wx.BITMAP_TYPE_JPEG)
+            sb = wx.StaticBitmap(self.rcp_scrolled_window, wx.ID_ANY, bitmap, wx.DefaultPosition,
+                                 wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
+            rp_sizer.Add(sb, 0, wx.ALL, 1)
+        self.rcp_scrolled_window.SetSizer(rp_sizer)
         self.rcp_scrolled_window.Layout()
-        rcp_pic_sizer.Fit(self.rcp_scrolled_window)
+        rp_sizer.Fit(self.rcp_scrolled_window)
 
     def mr_show_hide_panel(self, event):
         """
