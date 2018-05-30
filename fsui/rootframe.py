@@ -199,6 +199,8 @@ class RootFrame(wx.Frame):
         self.root_listbook.AddPage(self.cartoon_panel, u"Cartoon", False)
         self.comic_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         self.root_listbook.AddPage(self.comic_panel, u"Comic", False)
+        self.game_panel = wx.Panel(self.root_listbook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.root_listbook.AddPage(self.game_panel, u"Game", False)
 
         root_sizer.Add(self.root_listbook, 1, wx.EXPAND | wx.ALL, 0)
 
@@ -229,8 +231,14 @@ class RootFrame(wx.Frame):
         self.Centre(wx.BOTH)
 
         # Connect Events
-        self.rlp_tabs.Bind(wx.EVT_LEFT_UP, self.on_show_hide_panel)
-        self.rlp_actor_text.Bind(wx.EVT_LEFT_UP, self.on_show_hide_panel)
+        self.root_listbook.Bind(wx.EVT_LISTBOOK_PAGE_CHANGED, self.on_page_changed)
+        self.movie_notebook.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.on_movie_page_changed)
+        self.rlp_tabs.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_tabs_bmp.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_tabs_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_actor.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_actor_bmp.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_actor_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.Bind(wx.EVT_MENU, self.on_mm_add_movie, id=self.mm_add_movie.GetId())
         self.Bind(wx.EVT_MENU, self.on_mm_add_movie_folder, id=self.mm_add_folder.GetId())
         self.Bind(wx.EVT_MENU, self.on_mh_about, id=self.mh_about.GetId())
@@ -239,7 +247,13 @@ class RootFrame(wx.Frame):
         pass
 
     # Virtual event handlers, overide them in your derived class
-    def on_show_hide_panel(self, event):
+    def on_page_changed(self, event):
+        event.Skip()
+
+    def on_movie_page_changed(self, event):
+        event.Skip()
+
+    def mr_show_hide_panel(self, event):
         event.Skip()
 
     def on_mm_add_movie(self, event):

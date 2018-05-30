@@ -7,18 +7,52 @@ from fsui.rootframe import RootFrame
 class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
-              'do you think so', 'yes i do']
-        self.show_rider_contents(tl, 25)
 
-    def show_rider_contents(self, tl, pic_count=30):
+    def on_page_changed(self, event):
         """
-        show rider tab content
-        :param tl:
+        Switch between pages of the main window
+        :param event:
+        :return:
+        """
+        selected_page = self.root_listbook.GetSelection()
+        if selected_page == 0:    # 'Home' page
+            pass
+        elif selected_page == 1:  # 'Movie' page
+            self.on_movie_page_changed(event)
+        elif selected_page == 2:  # 'Video' page
+            pass
+        elif selected_page == 3:  # 'Cartoon' page
+            pass
+        elif selected_page == 4:  # 'Comic' page
+            pass
+        elif selected_page == 5:  # 'Game' page
+            pass
+
+    def on_movie_page_changed(self, event):
+        """
+        Switch between sub pages of the Movie page
+        :param event:
+        :return:
+        """
+        sm_page = self.movie_notebook.GetSelection()
+        if sm_page == 0:    # 'Rider' page
+            self.show_movie_rider_page()
+        elif sm_page == 1:  # 'Saber' page
+            pass
+        elif sm_page == 2:  # 'Lancer' page
+            pass
+        elif sm_page == 3:  # 'Caster' page
+            pass
+
+    def show_movie_rider_page(self, pic_count=30):
+        """
+        show contents of the Movie->Rider page
         :param pic_count:
         :return:
         """
         # show widgets on rlp_tabs_panel
+        tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
+              'do you think so', 'yes i do']
         rlp_tabs_sizer = wx.WrapSizer()
         for i in range(len(tl)):
             cb = wx.CheckBox(self.rlp_tabs_panel, wx.ID_ANY, tl[i], wx.DefaultPosition, wx.DefaultSize, 0)
@@ -50,7 +84,7 @@ class MainWindow(RootFrame):
         self.rcp_scrolled_window.Layout()
         rcp_pic_sizer.Fit(self.rcp_scrolled_window)
 
-    def on_show_hide_panel(self, event):
+    def mr_show_hide_panel(self, event):
         """
         show or hide a tab rlp panel when user click these panels
         :param event:
