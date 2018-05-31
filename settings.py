@@ -10,6 +10,10 @@ DB_DICT = {
     'charset': 'utf8mb4'
 }
 
-PICTURE_SIZE = {
+PICTURE_SIZE = {  # (width, height)
     'rider': (250, 356)
+}
+
+PICTURE_GAP = {  # (HGap, VGap)
+    'rider': (5, 2)
 }
