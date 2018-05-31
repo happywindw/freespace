@@ -15,9 +15,23 @@ class MainWindow(RootFrame):
 
     def init_movie_page(self):
         tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
-              'do you think so', 'yes i do']
+              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone']
+        tt = ['a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+              'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+              'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+              'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+              ]
         self.load_movie_rider_tabs(tl, self.rlp_tabs_panel)
-        self.load_movie_rider_tabs(tl, self.rlp_actor_panel)
+        self.load_movie_rider_tabs(tt, self.rlp_actor_panel)
 
         pic_list = ['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
                     'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
@@ -56,7 +70,24 @@ class MainWindow(RootFrame):
         if sm_page == 0:    # 'Rider' page
             self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
                                             'E:/Pictures/wdfe.jpg'])
-            # self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg'])
+            tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
+                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
+                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone']
+            tt = ['a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+                  'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+                  'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+                  'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
+                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
+                  ]
+            self.load_movie_rider_tabs(tt, self.rlp_tabs_panel)
+            self.load_movie_rider_tabs(tt, self.rlp_actor_panel)
         elif sm_page == 1:  # 'Saber' page
             pass
         elif sm_page == 2:  # 'Lancer' page
@@ -72,10 +103,15 @@ class MainWindow(RootFrame):
         :return:
         """
         # remove children widgets first
-        for child in tab_panel.GetChildren():
-            tab_panel.RemoveChild(child)
+        rt_sizer = tab_panel.GetSizer()
+        if rt_sizer:
+            child_length = len(tab_panel.GetChildren())
+            for i, child in enumerate(tab_panel.GetChildren()):
+                rt_sizer.Hide(child_length - i - 1)
+                rt_sizer.Remove(child_length - i - 1)
+                tab_panel.RemoveChild(child)
 
-        rt_sizer = wx.WrapSizer()
+        rt_sizer = wx.WrapSizer() if not rt_sizer else rt_sizer
         if tab_panel is self.rlp_tabs_panel:
             for tab in tab_list:
                 cb = wx.CheckBox(self.rlp_tabs_panel, wx.ID_ANY, tab, wx.DefaultPosition, wx.DefaultSize, 0)
@@ -141,6 +177,8 @@ class MainWindow(RootFrame):
             tb.Hide()
         else:
             tb.Show()
+        self.rlp_scrolled_window.Layout()
+        self.rlp_scrolled_window.GetSizer().FitInside(self.rlp_scrolled_window)
 
     def on_mm_add_movie(self, event):
         """
