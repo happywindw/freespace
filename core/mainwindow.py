@@ -87,7 +87,7 @@ class MainWindow(RootFrame):
                   'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
                   ]
             self.load_movie_rider_tabs(tt, self.rlp_tabs_panel)
-            self.load_movie_rider_tabs(tt, self.rlp_actor_panel)
+            self.load_movie_rider_tabs(tl, self.rlp_actor_panel)
         elif sm_page == 1:  # 'Saber' page
             pass
         elif sm_page == 2:  # 'Lancer' page
@@ -97,32 +97,38 @@ class MainWindow(RootFrame):
 
     def load_movie_rider_tabs(self, tab_list, tab_panel):
         """
-        a universal method to load and show tabs on specified tab panel
+        a universal method to load and show given tabs on specified tab panel
         :param tab_list:
         :param tab_panel:
         :return:
         """
-        # remove children widgets first
-        rt_sizer = tab_panel.GetSizer()
-        if rt_sizer:
-            child_length = len(tab_panel.GetChildren())
-            for i, child in enumerate(tab_panel.GetChildren()):
-                rt_sizer.Hide(child_length - i - 1)
-                rt_sizer.Remove(child_length - i - 1)
-                tab_panel.RemoveChild(child)
-
-        rt_sizer = wx.WrapSizer() if not rt_sizer else rt_sizer
-        if tab_panel is self.rlp_tabs_panel:
-            for tab in tab_list:
-                cb = wx.CheckBox(self.rlp_tabs_panel, wx.ID_ANY, tab, wx.DefaultPosition, wx.DefaultSize, 0)
-                rt_sizer.Add(cb, 0, wx.ALL, 1)
-        else:
-            for tab in tab_list:
-                rb = wx.RadioButton(self.rlp_actor_panel, wx.ID_ANY, tab, wx.DefaultPosition, wx.DefaultSize, 0)
-                rt_sizer.Add(rb, 0, wx.ALL, 1)
+        child_list = tab_panel.GetChildren()
+        child_count = len(child_list)
+        rt_sizer = wx.WrapSizer() if not child_list else tab_panel.GetSizer()
+        flag = True if tab_panel is self.rlp_tabs_panel else False
+        for i, ts in enumerate(tab_list):
+            if i < child_count:
+                child_list[i].SetLabel(ts)
+            else:
+                if flag:
+                    tb = wx.CheckBox(tab_panel, wx.ID_ANY, ts, wx.DefaultPosition, wx.DefaultSize, 0)
+                else:
+                    tb = wx.RadioButton(tab_panel, wx.ID_ANY, ts, wx.DefaultPosition, wx.DefaultSize, 0)
+                rt_sizer.Add(tb, 0, wx.ALL, 1)
+        # remove the redundant widgets
+        remove_count = child_count - len(tab_list)
+        while remove_count > 0:
+            rt_sizer.Hide(child_count - 1)
+            rt_sizer.Remove(child_count - 1)
+            tab_panel.RemoveChild(child_list[child_count - 1])
+            child_count -= 1
+            remove_count -= 1
+        # resize panel
         tab_panel.SetSizer(rt_sizer)
         tab_panel.Layout()
         rt_sizer.Fit(tab_panel)
+        self.rlp_scrolled_window.Layout()
+        self.rlp_scrolled_window.GetSizer().FitInside(self.rlp_scrolled_window)
 
     def load_movie_rider_pictures(self, pic_list):
         """
