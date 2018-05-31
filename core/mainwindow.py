@@ -68,8 +68,8 @@ class MainWindow(RootFrame):
         """
         sm_page = self.movie_notebook.GetSelection()
         if sm_page == 0:    # 'Rider' page
-            self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
-                                            'E:/Pictures/wdfe.jpg'])
+            import random
+            self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg'] * random.randint(2, 30))
             tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
                   'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
                   'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
@@ -136,33 +136,38 @@ class MainWindow(RootFrame):
         :param pic_list: picture location list
         :return:
         """
-        # remove children widgets first
-        rp_sizer = self.rcp_scrolled_window.GetSizer()
-        if rp_sizer:
-            child_counts = len(self.rcp_scrolled_window.GetChildren())
-            for i, cp in enumerate(self.rcp_scrolled_window.GetChildren()):
-                rp_sizer.Hide(child_counts - i - 1)
-                rp_sizer.Remove(child_counts - i - 1)
-                self.rcp_scrolled_window.RemoveChild(cp)
-
         # calculate row and column counts
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
         col_count = max(math.floor(width / (settings.PICTURE_SIZE['rider'][0] + settings.PICTURE_GAP['rider'][1])), 1)
         row_count = max(math.ceil(len(pic_list) / col_count), 1)
+        rp_sizer = self.rcp_scrolled_window.GetSizer()
         if rp_sizer:
             rp_sizer.SetRows(row_count)
             rp_sizer.SetCols(col_count)
         else:
             rp_sizer = wx.GridSizer(row_count, col_count, settings.PICTURE_GAP['rider'][0],
                                     settings.PICTURE_GAP['rider'][1])
-
-        # put pictures on rcp_scrolled_window
-        for pic in pic_list:
+        # add new pictures on panel
+        child_list = self.rcp_scrolled_window.GetChildren()
+        child_count = len(child_list)
+        for i, pic in enumerate(pic_list):
             bitmap = wx.Bitmap(pic, wx.BITMAP_TYPE_JPEG)
-            sb = wx.StaticBitmap(self.rcp_scrolled_window, wx.ID_ANY, bitmap, wx.DefaultPosition,
-                                 wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
-            rp_sizer.Add(sb, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 1)
+            if i < child_count:
+                child_list[i].SetBitmap(bitmap)
+            else:
+                sb = wx.StaticBitmap(self.rcp_scrolled_window, wx.ID_ANY, bitmap, wx.DefaultPosition,
+                                     wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
+                rp_sizer.Add(sb, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 1)
+        # remove redundant pictures
+        remove_count = child_count - len(pic_list)
+        while remove_count > 0:
+            rp_sizer.Hide(child_count - 1)
+            rp_sizer.Remove(child_count - 1)
+            self.rcp_scrolled_window.RemoveChild(child_list[child_count - 1])
+            child_count -= 1
+            remove_count -= 1
+        # layout and fit
         self.rcp_scrolled_window.SetSizer(rp_sizer)
         self.rcp_scrolled_window.Layout()
         rp_sizer.FitInside(self.rcp_scrolled_window)
