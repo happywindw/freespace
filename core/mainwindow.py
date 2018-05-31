@@ -70,22 +70,8 @@ class MainWindow(RootFrame):
         if sm_page == 0:    # 'Rider' page
             import random
             self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg'] * random.randint(2, 30))
-            tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
-                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-                  'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone']
-            tt = ['a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-                  'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-                  'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-                  'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-                  'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-                  ]
+            tl = ['a', 'yes', 'no', 'how', 'ok', 'environment'] * random.randint(1, 20)
+            tt = ['1', '23', '9999', '7', '66', '87654', '-1', '000'] * random.randint(1, 20)
             self.load_movie_rider_tabs(tt, self.rlp_tabs_panel)
             self.load_movie_rider_tabs(tl, self.rlp_actor_panel)
         elif sm_page == 1:  # 'Saber' page
