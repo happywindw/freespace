@@ -94,6 +94,8 @@ class MainWindow(RootFrame):
         flag = True if tab_panel is self.rlp_tabs_panel else False
         for i, ts in enumerate(tab_list):
             if i < child_count:
+                if child_list[i].GetLabel() == tab_list[i]:
+                    continue
                 child_list[i].SetLabel(ts)
             else:
                 if flag:
