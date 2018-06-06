@@ -1,44 +1,32 @@
 import math
 import wx
 import settings
+from core.taskcenter import TaskCenter
 from fsui.rootframe import RootFrame
 
 
 class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.tc = TaskCenter()
 
+        # init widgets on movie page
+        self.rcp_popup_menu = wx.Menu()
+        for text in ['Play', 'Detail', 'Edit', 'Open Dir', 'Delete']:
+            item = self.rcp_popup_menu.Append(-1, text)
+            self.rcp_scrolled_window.Bind(wx.EVT_MENU, self.mr_popup_item_selected, item)
         self.init_movie_page()
 
     def init_home_page(self):
         pass
 
     def init_movie_page(self):
-        tl = ['this', 'i do not know', 'is that right', 'goodbye', 'i want it', 'show your heart', 'come on',
-              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone',
-              'do you think so', 'yes i do', 'oh my god', 'how do you do', 'may i help you', 'leave me alone']
-        tt = ['a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-              'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-              'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-              'a', 'b', 'cc', 'alice', 'bob', 'tom', 'victor', 'troy', 'jim', 'this is not your fault', 'yes',
-              'please forgive me', 'oh shirt', 'thanks a lot', 'come on baby', 'where are you', 'shut up',
-              ]
-        self.load_movie_rider_tabs(tl, self.rlp_tabs_panel)
-        self.load_movie_rider_tabs(tt, self.rlp_actor_panel)
+        tl = self.tc.get_movie_rider_tabs()
+        self.load_movie_rider_tabs(tl['tabs'], self.rlp_tabs_panel)
+        self.load_movie_rider_tabs(tl['actor'], self.rlp_actor_panel)
 
-        pic_list = ['E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
-                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
-                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
-                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg',
-                    'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg', 'E:/Pictures/wdfe.jpg']
-        self.load_movie_rider_pictures(pic_list)
+        pl = self.tc.get_movie_rider_pics()
+        self.load_movie_rider_pictures(pl)
 
     def on_page_changed(self, event):
         """
@@ -68,12 +56,7 @@ class MainWindow(RootFrame):
         """
         sm_page = self.movie_notebook.GetSelection()
         if sm_page == 0:    # 'Rider' page
-            import random
-            self.load_movie_rider_pictures(['E:/Pictures/wdfe.jpg'] * random.randint(2, 30))
-            tl = ['a', 'yes', 'no', 'how', 'ok', 'environment'] * random.randint(1, 20)
-            tt = ['1', '23', '9999', '7', '66', '87654', '-1', '000'] * random.randint(1, 20)
-            self.load_movie_rider_tabs(tt, self.rlp_tabs_panel)
-            self.load_movie_rider_tabs(tl, self.rlp_actor_panel)
+            pass
         elif sm_page == 1:  # 'Saber' page
             pass
         elif sm_page == 2:  # 'Lancer' page
@@ -147,6 +130,7 @@ class MainWindow(RootFrame):
                 sb = wx.StaticBitmap(self.rcp_scrolled_window, wx.ID_ANY, bitmap, wx.DefaultPosition,
                                      wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
                 rp_sizer.Add(sb, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 1)
+                sb.Bind(wx.EVT_CONTEXT_MENU, self.mr_show_popup_menu)
         # remove redundant pictures
         remove_count = child_count - len(pic_list)
         while remove_count > 0:
@@ -178,6 +162,25 @@ class MainWindow(RootFrame):
             tb.Show()
         self.rlp_scrolled_window.Layout()
         self.rlp_scrolled_window.GetSizer().FitInside(self.rlp_scrolled_window)
+
+    def mr_show_popup_menu(self, event):
+        """
+        show popup menu when user right click on pictures
+        :param event:
+        :return:
+        """
+        pos = event.GetPosition()
+        pos = self.rcp_scrolled_window.ScreenToClient(pos)
+        self.rcp_scrolled_window.PopupMenu(self.rcp_popup_menu, pos)
+
+    def mr_popup_item_selected(self, event):
+        """
+        deal with selected item
+        :param event:
+        :return:
+        """
+        item = self.rcp_popup_menu.FindItemById(event.GetId())
+        wx.MessageBox("You selected item '%s'" % item.GetText())
 
     def on_mm_add_movie(self, event):
         """
