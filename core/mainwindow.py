@@ -171,13 +171,17 @@ class MainWindow(RootFrame):
         :param event:
         :return:
         """
-        for chk in self.rlp_tabs_panel.GetChildren():
-            if chk.GetValue():
-                print(chk, chk.GetValue())
-
-        for rdo in self.rlp_actor_panel.GetChildren():
-            if rdo.GetValue():
-                print(rdo, rdo.GetValue())
+        tab_list = []
+        if self.rlp_tabs_panel.IsShown():
+            for chk in self.rlp_tabs_panel.GetChildren():
+                if chk.GetValue():
+                    tab_list.append(chk.GetLabel())
+        chosen_actor = ''
+        if self.rlp_actor_panel.IsShown():
+            for rdo in self.rlp_actor_panel.GetChildren():
+                if rdo.GetValue():
+                    chosen_actor = rdo.GetLabel()
+        print(tab_list, chosen_actor)
         event.Skip()
 
     def mr_show_popup_menu(self, event):
