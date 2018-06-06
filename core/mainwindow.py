@@ -83,8 +83,10 @@ class MainWindow(RootFrame):
             else:
                 if flag:
                     tb = wx.CheckBox(tab_panel, wx.ID_ANY, ts, wx.DefaultPosition, wx.DefaultSize, 0)
+                    tb.Bind(wx.EVT_CHECKBOX, self.mr_filter_rider)
                 else:
                     tb = wx.RadioButton(tab_panel, wx.ID_ANY, ts, wx.DefaultPosition, wx.DefaultSize, 0)
+                    tb.Bind(wx.EVT_RADIOBUTTON, self.mr_filter_rider)
                 rt_sizer.Add(tb, 0, wx.ALL, 1)
         # remove the redundant widgets
         remove_count = child_count - len(tab_list)
@@ -162,6 +164,21 @@ class MainWindow(RootFrame):
             tb.Show()
         self.rlp_scrolled_window.Layout()
         self.rlp_scrolled_window.GetSizer().FitInside(self.rlp_scrolled_window)
+
+    def mr_filter_rider(self, event):
+        """
+        filter rider movies which matches the selected tabs
+        :param event:
+        :return:
+        """
+        for chk in self.rlp_tabs_panel.GetChildren():
+            if chk.GetValue():
+                print(chk, chk.GetValue())
+
+        for rdo in self.rlp_actor_panel.GetChildren():
+            if rdo.GetValue():
+                print(rdo, rdo.GetValue())
+        event.Skip()
 
     def mr_show_popup_menu(self, event):
         """
