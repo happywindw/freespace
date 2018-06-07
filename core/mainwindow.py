@@ -133,6 +133,8 @@ class MainWindow(RootFrame):
                                      wx.Size(settings.PICTURE_SIZE['rider']), wx.BU_AUTODRAW)
                 rp_sizer.Add(sb, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 1)
                 sb.Bind(wx.EVT_CONTEXT_MENU, self.mr_show_popup_menu)
+                sb.Bind(wx.EVT_ENTER_WINDOW, self.mr_enter_picture)
+                sb.Bind(wx.EVT_LEAVE_WINDOW, self.mr_leave_picture)
         # remove redundant pictures
         remove_count = child_count - len(pic_list)
         while remove_count > 0:
@@ -193,6 +195,24 @@ class MainWindow(RootFrame):
         pos = event.GetPosition()
         pos = self.rcp_scrolled_window.ScreenToClient(pos)
         self.rcp_scrolled_window.PopupMenu(self.rcp_popup_menu, pos)
+
+    def mr_enter_picture(self, event):
+        sb = event.GetEventObject()
+        img = wx.Image('e:/pictures/test.jpg')
+        ps = img.GetSize()
+        img = img.Scale(int(ps[0] * 356 / ps[1]), 356, wx.IMAGE_QUALITY_HIGH)
+        bitmap = wx.Bitmap(img.Resize((250, 356), wx.Point(0, 0)), wx.BITMAP_TYPE_JPEG)
+        bitmap.SetSize((250, 356))
+        sb.SetBitmap(bitmap)
+
+    def mr_leave_picture(self, event):
+        sb = event.GetEventObject()
+        img = wx.Image('e:/pictures/test.jpg')
+        ps = img.GetSize()
+        img = img.Scale(int(ps[0] * 356 / ps[1]), 356, wx.IMAGE_QUALITY_HIGH)
+        bitmap = wx.Bitmap(img.Resize((250, 356), wx.Point(256 - img.GetSize()[0], 0)), wx.BITMAP_TYPE_JPEG)
+        bitmap.SetSize((250, 356))
+        sb.SetBitmap(bitmap)
 
     def mr_popup_item_selected(self, event):
         """
