@@ -198,7 +198,7 @@ class MainWindow(RootFrame):
 
     def mr_enter_picture(self, event):
         sb = event.GetEventObject()
-        img = wx.Image('e:/pictures/test.jpg')
+        img = wx.Image('./temp/test.jpg')
         ps = img.GetSize()
         img = img.Scale(int(ps[0] * 356 / ps[1]), 356, wx.IMAGE_QUALITY_HIGH)
         bitmap = wx.Bitmap(img.Resize((250, 356), wx.Point(0, 0)), wx.BITMAP_TYPE_JPEG)
@@ -207,7 +207,7 @@ class MainWindow(RootFrame):
 
     def mr_leave_picture(self, event):
         sb = event.GetEventObject()
-        img = wx.Image('e:/pictures/test.jpg')
+        img = wx.Image('./temp/test.jpg')
         ps = img.GetSize()
         img = img.Scale(int(ps[0] * 356 / ps[1]), 356, wx.IMAGE_QUALITY_HIGH)
         bitmap = wx.Bitmap(img.Resize((250, 356), wx.Point(256 - img.GetSize()[0], 0)), wx.BITMAP_TYPE_JPEG)

@@ -12,4 +12,4 @@ class TaskCenter(object):
 
     def get_movie_rider_pics(self, num=30):
         import random
-        return ['E:/Pictures/wdfe.jpg'] * random.randint(1, num)
+        return ['./temp/sample.jpg'] * random.randint(1, num)
