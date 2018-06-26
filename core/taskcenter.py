@@ -17,6 +17,8 @@ class MovieTask(object):
             tl = ['1', '23', '9999', '7', '66', '87654321', '000'] * random.randint(1, 20)
         else:
             tl = []
+        if tab_name != 'tabs':
+            tl.insert(0, 'All')
         return tl
 
     def get_movie_rider_pics(self, num=30):

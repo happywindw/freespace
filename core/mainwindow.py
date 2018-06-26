@@ -140,7 +140,7 @@ class MainWindow(RootFrame):
         child_count = len(child_list)
         for i, pic in enumerate(pic_list):
             pic = pic[1] if os.path.exists(pic[1]) else './test/temp.jpg'
-            bitmap = wx.Bitmap(pic, wx.BITMAP_TYPE_JPEG)
+            bitmap = get_fitted_bitmap(pic, PICTURE_SIZE['rider'], 'right')
             if i < child_count:
                 child_list[i].SetBitmap(bitmap)
             else:
@@ -219,10 +219,10 @@ class MainWindow(RootFrame):
         """
         sb = event.GetEventObject()
         index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
-        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'right')
+        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'left')
         sb.SetBitmap(bitmap)
-        tw = wx.TipWindow(self, self.movie_dict['rider']['pics'][index][0])
-        tw.SetBoundingRect(wx.Rect(sb.GetScreenPosition(), sb.GetBitmap().GetSize()))
+        # tw = wx.TipWindow(sb, self.movie_dict['rider']['pics'][index][0])
+        # tw.SetBoundingRect(wx.Rect(sb.GetScreenPosition(), sb.GetBitmap().GetSize()))
 
     def mr_leave_picture(self, event):
         """
@@ -232,7 +232,7 @@ class MainWindow(RootFrame):
         """
         sb = event.GetEventObject()
         index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
-        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'left')
+        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'right')
         sb.SetBitmap(bitmap)
 
     def mr_popup_item_selected(self, event):
