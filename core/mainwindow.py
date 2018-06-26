@@ -2,7 +2,7 @@ import math
 import os
 import wx
 
-from core.taskcenter import TaskCenter
+from core.taskcenter import MovieTask
 from core.utils import get_fitted_bitmap
 from fsui.rootframe import RootFrame
 from settings import PICTURE_SIZE, PICTURE_GAP
@@ -11,7 +11,7 @@ from settings import PICTURE_SIZE, PICTURE_GAP
 class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.tc = TaskCenter()
+        self.tcl = {'rider': MovieTask()}
         self.home_dict = {}
         self.video_dict = {}
         self.cartoon_dict = {}
@@ -35,9 +35,9 @@ class MainWindow(RootFrame):
         pass
 
     def init_movie_page(self):
-        self.movie_dict['rider']['label']['tabs'] = self.tc.movie_task.get_movie_rider_tabs('tabs')
-        self.movie_dict['rider']['label']['actor'] = self.tc.movie_task.get_movie_rider_tabs('actor')
-        self.movie_dict['rider']['movie'] = self.tc.movie_task.get_movie_rider_pics({'tabs': [], 'actor': 'All'})
+        self.movie_dict['rider']['label']['tabs'] = self.tcl['rider'].get_movie_rider_tabs('tabs')
+        self.movie_dict['rider']['label']['actor'] = self.tcl['rider'].get_movie_rider_tabs('actor')
+        self.movie_dict['rider']['movie'] = self.tcl['rider'].get_movie_rider_pics({'tabs': [], 'actor': 'All'})
 
         self.load_movie_rider_tabs(self.movie_dict['rider']['label']['tabs'], self.rlp_tabs_panel)
         self.load_movie_rider_tabs(self.movie_dict['rider']['label']['actor'], self.rlp_actor_panel)
@@ -201,7 +201,7 @@ class MainWindow(RootFrame):
             for rdo in self.rlp_actor_panel.GetChildren():
                 if rdo.GetValue():
                     filter_dict['actor'] = rdo.GetLabel()
-        self.movie_dict['rider']['movie'] = self.tc.movie_task.get_movie_rider_pics(filter_dict)
+        self.movie_dict['rider']['movie'] = self.tcl['rider'].get_movie_rider_pics(filter_dict)
         print(filter_dict)
         event.Skip()
 

@@ -2,11 +2,13 @@
 
 class TaskCenter(object):
     def __init__(self):
-        self.movie_task = MovieTask()
+        # self.movie_task = MovieTask()
+        pass
 
 
-class MovieTask(object):
+class MovieTask(TaskCenter):
     def __init__(self):
+        super().__init__()
         pass
 
     def get_movie_rider_tabs(self, tab_name):
