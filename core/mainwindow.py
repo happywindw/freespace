@@ -37,7 +37,7 @@ class MainWindow(RootFrame):
     def init_movie_page(self):
         self.movie_dict['rider']['label']['tabs'] = self.tc.movie_task.get_movie_rider_tabs('tabs')
         self.movie_dict['rider']['label']['actor'] = self.tc.movie_task.get_movie_rider_tabs('actor')
-        self.movie_dict['rider']['pics'] = self.tc.movie_task.get_movie_rider_pics()
+        self.movie_dict['rider']['movie'] = self.tc.movie_task.get_movie_rider_pics({'tabs': [], 'actor': 'All'})
 
         self.load_movie_rider_tabs(self.movie_dict['rider']['label']['tabs'], self.rlp_tabs_panel)
         self.load_movie_rider_tabs(self.movie_dict['rider']['label']['actor'], self.rlp_actor_panel)
@@ -103,6 +103,8 @@ class MainWindow(RootFrame):
                     tb = wx.RadioButton(tab_panel, wx.ID_ANY, ts, wx.DefaultPosition, wx.DefaultSize, 0)
                     tb.Bind(wx.EVT_RADIOBUTTON, self.mr_filter_rider)
                 rt_sizer.Add(tb, 0, wx.ALL, 1)
+        if not flag:
+            child_list[0].SetValue(True)  # choose the first one as default
         # remove the redundant widgets
         remove_count = child_count - len(tab_list)
         while remove_count > 0:
@@ -123,7 +125,7 @@ class MainWindow(RootFrame):
         load and show pictures on rcp_scrolled_window
         :return:
         """
-        pic_list = self.movie_dict['rider']['pics']
+        pic_list = self.movie_dict['rider']['movie']
         # calculate row and column counts
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
@@ -188,17 +190,19 @@ class MainWindow(RootFrame):
         :param event:
         :return:
         """
+        filter_dict = {}
         tab_list = []
         if self.rlp_tabs_panel.IsShown():
             for chk in self.rlp_tabs_panel.GetChildren():
                 if chk.GetValue():
                     tab_list.append(chk.GetLabel())
-        chosen_actor = ''
+        filter_dict['tabs'] = tab_list
         if self.rlp_actor_panel.IsShown():
             for rdo in self.rlp_actor_panel.GetChildren():
                 if rdo.GetValue():
-                    chosen_actor = rdo.GetLabel()
-        print(tab_list, chosen_actor)
+                    filter_dict['actor'] = rdo.GetLabel()
+        self.movie_dict['rider']['movie'] = self.tc.movie_task.get_movie_rider_pics(filter_dict)
+        print(filter_dict)
         event.Skip()
 
     def mr_show_popup_menu(self, event):
@@ -219,7 +223,7 @@ class MainWindow(RootFrame):
         """
         sb = event.GetEventObject()
         index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
-        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'left')
+        bitmap = get_fitted_bitmap(self.movie_dict['rider']['movie'][index][1], PICTURE_SIZE['rider'], 'left')
         sb.SetBitmap(bitmap)
         # tw = wx.TipWindow(sb, self.movie_dict['rider']['pics'][index][0])
         # tw.SetBoundingRect(wx.Rect(sb.GetScreenPosition(), sb.GetBitmap().GetSize()))
@@ -232,7 +236,7 @@ class MainWindow(RootFrame):
         """
         sb = event.GetEventObject()
         index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
-        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'right')
+        bitmap = get_fitted_bitmap(self.movie_dict['rider']['movie'][index][1], PICTURE_SIZE['rider'], 'right')
         sb.SetBitmap(bitmap)
 
     def mr_popup_item_selected(self, event):

@@ -21,6 +21,6 @@ class MovieTask(object):
             tl.insert(0, 'All')
         return tl
 
-    def get_movie_rider_pics(self, num=30):
+    def get_movie_rider_pics(self, filter_dict, start=0, num=30):
         import random
         return [('sss', './temp/test.jpg')] * random.randint(1, num)
