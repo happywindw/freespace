@@ -19,7 +19,12 @@ class MainWindow(RootFrame):
         self.game_dict = {}
 
         # init widgets on movie page
-        self.movie_dict = {'rider': {}, 'saber': {}, 'lancer': {}, 'caster': {}}
+        self.movie_dict = {
+            'rider': {'label': {}},
+            'saber': {},
+            'lancer': {},
+            'caster': {}
+        }
         self.rcp_popup_menu = wx.Menu()
         for text in ['Play', 'Detail', 'Edit', 'Open Dir', 'Delete']:
             item = self.rcp_popup_menu.Append(-1, text)
@@ -30,12 +35,13 @@ class MainWindow(RootFrame):
         pass
 
     def init_movie_page(self):
-        tl = self.tc.get_movie_rider_tabs()
-        self.load_movie_rider_tabs(tl['tabs'], self.rlp_tabs_panel)
-        self.load_movie_rider_tabs(tl['actor'], self.rlp_actor_panel)
+        self.movie_dict['rider']['label']['tabs'] = self.tc.movie_task.get_movie_rider_tabs('tabs')
+        self.movie_dict['rider']['label']['actor'] = self.tc.movie_task.get_movie_rider_tabs('actor')
+        self.movie_dict['rider']['pics'] = self.tc.movie_task.get_movie_rider_pics()
 
-        pl = self.tc.get_movie_rider_pics()
-        self.load_movie_rider_pictures(pl)
+        self.load_movie_rider_tabs(self.movie_dict['rider']['label']['tabs'], self.rlp_tabs_panel)
+        self.load_movie_rider_tabs(self.movie_dict['rider']['label']['actor'], self.rlp_actor_panel)
+        self.load_movie_rider_pictures()
 
     def on_page_changed(self, event):
         """
@@ -112,12 +118,12 @@ class MainWindow(RootFrame):
         self.rlp_scrolled_window.Layout()
         self.rlp_scrolled_window.GetSizer().FitInside(self.rlp_scrolled_window)
 
-    def load_movie_rider_pictures(self, pic_list):
+    def load_movie_rider_pictures(self):
         """
         load and show pictures on rcp_scrolled_window
-        :param pic_list: picture location list
         :return:
         """
+        pic_list = self.movie_dict['rider']['pics']
         # calculate row and column counts
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
@@ -133,7 +139,7 @@ class MainWindow(RootFrame):
         child_list = self.rcp_scrolled_window.GetChildren()
         child_count = len(child_list)
         for i, pic in enumerate(pic_list):
-            pic = pic if os.path.exists(pic) else './test/temp.jpg'
+            pic = pic[1] if os.path.exists(pic[1]) else './test/temp.jpg'
             bitmap = wx.Bitmap(pic, wx.BITMAP_TYPE_JPEG)
             if i < child_count:
                 child_list[i].SetBitmap(bitmap)
