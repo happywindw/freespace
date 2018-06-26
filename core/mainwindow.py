@@ -3,6 +3,7 @@ import os
 import wx
 
 from core.taskcenter import TaskCenter
+from core.utils import get_fitted_bitmap
 from fsui.rootframe import RootFrame
 from settings import PICTURE_SIZE, PICTURE_GAP
 
@@ -200,20 +201,12 @@ class MainWindow(RootFrame):
 
     def mr_enter_picture(self, event):
         sb = event.GetEventObject()
-        img = wx.Image('./temp/test.jpg')
-        ps = img.GetSize()
-        img = img.Scale(int(ps[0] * 356 / ps[1]), 356, wx.IMAGE_QUALITY_HIGH)
-        bitmap = wx.Bitmap(img.Resize(PICTURE_SIZE['rider'], wx.Point(0, 0)), wx.BITMAP_TYPE_JPEG)
-        bitmap.SetSize((250, 356))
+        bitmap = get_fitted_bitmap('./temp/test.jpg', PICTURE_SIZE['rider'], 'left')
         sb.SetBitmap(bitmap)
 
     def mr_leave_picture(self, event):
         sb = event.GetEventObject()
-        img = wx.Image('./temp/test.jpg')
-        ps = img.GetSize()
-        img = img.Scale(int(ps[0] * 356 / ps[1]), 356, wx.IMAGE_QUALITY_HIGH)
-        bitmap = wx.Bitmap(img.Resize((250, 356), wx.Point(256 - img.GetSize()[0], 0)), wx.BITMAP_TYPE_JPEG)
-        bitmap.SetSize((250, 356))
+        bitmap = get_fitted_bitmap('./temp/test.jpg', PICTURE_SIZE['rider'], 'right')
         sb.SetBitmap(bitmap)
 
     def mr_popup_item_selected(self, event):

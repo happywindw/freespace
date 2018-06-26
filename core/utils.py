@@ -24,9 +24,9 @@ def get_fitted_bitmap(pic, size, direction='center'):
     if direction == 'center':
         bitmap = wx.Bitmap(img, wx.BITMAP_TYPE_JPEG)
     elif direction == 'left' or direction == 'top':
-        bitmap = wx.Bitmap(img.Resize(size, 0, 0), wx.BITMAP_TYPE_JPEG)
+        bitmap = wx.Bitmap(img.Resize(size, (0, 0)), wx.BITMAP_TYPE_JPEG)
     elif direction == 'right' or direction == 'bottom':
-        bitmap = wx.Bitmap(img.Resize(size, wx.Point(size[0] - img.GetSize()[0], 0)), wx.BITMAP_TYPE_JPEG)
+        bitmap = wx.Bitmap(img.Resize(size, (wx.Point(size[0] - img.GetSize()[0], 0))), wx.BITMAP_TYPE_JPEG)
     else:
         raise Exception("The parameter 'direction' should be one of 'center', 'left', 'right', 'top' or 'bottom'.")
     return bitmap
