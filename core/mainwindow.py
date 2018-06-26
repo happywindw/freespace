@@ -12,8 +12,14 @@ class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.tc = TaskCenter()
+        self.home_dict = {}
+        self.video_dict = {}
+        self.cartoon_dict = {}
+        self.comic_dict = {}
+        self.game_dict = {}
 
         # init widgets on movie page
+        self.movie_dict = {'rider': {}, 'saber': {}, 'lancer': {}, 'caster': {}}
         self.rcp_popup_menu = wx.Menu()
         for text in ['Play', 'Detail', 'Edit', 'Open Dir', 'Delete']:
             item = self.rcp_popup_menu.Append(-1, text)
