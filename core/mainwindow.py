@@ -212,13 +212,27 @@ class MainWindow(RootFrame):
         self.rcp_scrolled_window.PopupMenu(self.rcp_popup_menu, pos)
 
     def mr_enter_picture(self, event):
+        """
+        show the picture from the 'right' or 'bottom' direction as well as show a tip window
+        :param event:
+        :return:
+        """
         sb = event.GetEventObject()
-        bitmap = get_fitted_bitmap('./temp/test.jpg', PICTURE_SIZE['rider'], 'left')
+        index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
+        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'right')
         sb.SetBitmap(bitmap)
+        tw = wx.TipWindow(self, self.movie_dict['rider']['pics'][index][0])
+        tw.SetBoundingRect(wx.Rect(sb.GetScreenPosition(), sb.GetBitmap().GetSize()))
 
     def mr_leave_picture(self, event):
+        """
+        show the picture from the 'left' or 'top' direction
+        :param event:
+        :return:
+        """
         sb = event.GetEventObject()
-        bitmap = get_fitted_bitmap('./temp/test.jpg', PICTURE_SIZE['rider'], 'right')
+        index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
+        bitmap = get_fitted_bitmap(self.movie_dict['rider']['pics'][index][1], PICTURE_SIZE['rider'], 'left')
         sb.SetBitmap(bitmap)
 
     def mr_popup_item_selected(self, event):
