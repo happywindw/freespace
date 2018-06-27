@@ -67,6 +67,14 @@ class RootFrame(wx.Frame):
         self.rlp_tabs_text.Wrap(-1)
         rlp_tabs_sizer.Add(self.rlp_tabs_text, 0, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 1)
 
+        self.rlp_bk_text = wx.StaticText(self.rlp_tabs, wx.ID_ANY, u"                                         ",
+                                         wx.DefaultPosition, wx.DefaultSize, 0)
+        self.rlp_bk_text.Wrap(-1)
+        rlp_tabs_sizer.Add(self.rlp_bk_text, 0, wx.ALL, 5)
+
+        self.rlp_clear_btn = wx.Button(self.rlp_tabs, wx.ID_ANY, u"Clear", wx.DefaultPosition, wx.Size(50, -1), 0)
+        rlp_tabs_sizer.Add(self.rlp_clear_btn, 0, wx.ALIGN_CENTER | wx.ALL, 0)
+
         self.rlp_tabs.SetSizer(rlp_tabs_sizer)
         self.rlp_tabs.Layout()
         rlp_tabs_sizer.Fit(self.rlp_tabs)
@@ -234,6 +242,8 @@ class RootFrame(wx.Frame):
         self.rlp_tabs.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_tabs_bmp.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_tabs_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_bk_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rlp_clear_btn.Bind(wx.EVT_BUTTON, self.mr_clear_tabs)
         self.rlp_actor.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_actor_bmp.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_actor_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
@@ -252,6 +262,9 @@ class RootFrame(wx.Frame):
         event.Skip()
 
     def mr_show_hide_panel(self, event):
+        event.Skip()
+
+    def mr_clear_tabs(self, event):
         event.Skip()
 
     def on_mm_add_movie(self, event):

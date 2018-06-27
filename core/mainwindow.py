@@ -184,6 +184,16 @@ class MainWindow(RootFrame):
         self.rlp_scrolled_window.Layout()
         self.rlp_scrolled_window.GetSizer().FitInside(self.rlp_scrolled_window)
 
+    def mr_clear_tabs(self, event):
+        """
+        clear selected tabs
+        :param event:
+        :return:
+        """
+        for cb in self.rlp_tabs_panel.GetChildren():
+            cb.SetValue(False)
+        self.mr_filter_rider(event)
+
     def mr_filter_rider(self, event):
         """
         filter rider movies which matches the selected tabs
