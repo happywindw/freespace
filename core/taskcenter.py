@@ -23,6 +23,6 @@ class MovieTask(TaskCenter):
             tl.insert(0, 'All')
         return tl
 
-    def get_movie_rider_pics(self, filter_dict, start=0, num=30):
+    def get_movie_rider_pics(self, filter_dict, pics_num, start_num=0):
         import random
-        return [('sss', './temp/test.jpg')] * random.randint(1, num)
+        return [('sss', './temp/test.jpg')] * random.randint(1, pics_num * 5)

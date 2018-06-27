@@ -11,20 +11,15 @@ from settings import PICTURE_SIZE, PICTURE_GAP
 class MainWindow(RootFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.tcl = {'rider': MovieTask()}
-        self.home_dict = {}
-        self.video_dict = {}
-        self.cartoon_dict = {}
-        self.comic_dict = {}
-        self.game_dict = {}
 
         # init widgets on movie page
-        self.movie_dict = {
-            'rider': {'label': {}},
-            'saber': {},
-            'lancer': {},
-            'caster': {}
-        }
+        self.movie_task = MovieTask()
+        self.mr_label_dict = {'tabs': [], 'actor': 'All'}
+        self.mr_movie_list = []
+        self.mr_current_page = 0
+        self.mr_total_page = 0
+        self.mr_pics_per_page = 30
+
         self.rcp_popup_menu = wx.Menu()
         for text in ['Play', 'Detail', 'Edit', 'Open Dir', 'Delete']:
             item = self.rcp_popup_menu.Append(-1, text)
@@ -35,12 +30,14 @@ class MainWindow(RootFrame):
         pass
 
     def init_movie_page(self):
-        self.movie_dict['rider']['label']['tabs'] = self.tcl['rider'].get_movie_rider_tabs('tabs')
-        self.movie_dict['rider']['label']['actor'] = self.tcl['rider'].get_movie_rider_tabs('actor')
-        self.movie_dict['rider']['movie'] = self.tcl['rider'].get_movie_rider_pics({'tabs': [], 'actor': 'All'})
+        self.mr_label_dict['tabs'] = self.movie_task.get_movie_rider_tabs('tabs')
+        self.mr_label_dict['actor'] = self.movie_task.get_movie_rider_tabs('actor')
+        self.load_movie_rider_tabs(self.mr_label_dict['tabs'], self.rlp_tabs_panel)
+        self.load_movie_rider_tabs(self.mr_label_dict['actor'], self.rlp_actor_panel)
 
-        self.load_movie_rider_tabs(self.movie_dict['rider']['label']['tabs'], self.rlp_tabs_panel)
-        self.load_movie_rider_tabs(self.movie_dict['rider']['label']['actor'], self.rlp_actor_panel)
+        self.mr_movie_list = self.movie_task.get_movie_rider_pics(self.mr_label_dict, self.mr_pics_per_page)
+        self.mr_total_page = math.ceil(len(self.mr_movie_list) / self.mr_pics_per_page)
+        self.mr_current_page = min(self.mr_total_page, 1)
         self.load_movie_rider_pictures()
 
     def on_page_changed(self, event):
@@ -125,12 +122,11 @@ class MainWindow(RootFrame):
         load and show pictures on rcp_scrolled_window
         :return:
         """
-        pic_list = self.movie_dict['rider']['movie']
         # calculate row and column counts
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
         col_count = max(math.floor(width / (PICTURE_SIZE['rider'][0] + PICTURE_GAP['rider'][1])), 1)
-        row_count = max(math.ceil(len(pic_list) / col_count), 1)
+        row_count = max(math.ceil(len(self.mr_movie_list) / col_count), 1)
         rp_sizer = self.rcp_scrolled_window.GetSizer()
         if rp_sizer:
             rp_sizer.SetRows(row_count)
@@ -140,7 +136,7 @@ class MainWindow(RootFrame):
         # add new pictures on panel
         child_list = self.rcp_scrolled_window.GetChildren()
         child_count = len(child_list)
-        for i, pic in enumerate(pic_list):
+        for i, pic in enumerate(self.mr_movie_list):
             pic = pic[1] if os.path.exists(pic[1]) else './test/temp.jpg'
             bitmap = get_fitted_bitmap(pic, PICTURE_SIZE['rider'], 'right')
             if i < child_count:
@@ -153,7 +149,7 @@ class MainWindow(RootFrame):
                 sb.Bind(wx.EVT_ENTER_WINDOW, self.mr_enter_picture)
                 sb.Bind(wx.EVT_LEAVE_WINDOW, self.mr_leave_picture)
         # remove redundant pictures
-        remove_count = child_count - len(pic_list)
+        remove_count = child_count - len(self.mr_movie_list)
         while remove_count > 0:
             rp_sizer.Hide(child_count - 1)
             rp_sizer.Remove(child_count - 1)
@@ -194,6 +190,15 @@ class MainWindow(RootFrame):
             cb.SetValue(False)
         self.mr_filter_rider(event)
 
+    def mr_prev_page(self, event):
+        event.Skip()
+
+    def mr_next_page(self, event):
+        event.Skip()
+
+    def mr_jump_page(self, event):
+        event.Skip()
+
     def mr_filter_rider(self, event):
         """
         filter rider movies which matches the selected tabs
@@ -206,13 +211,16 @@ class MainWindow(RootFrame):
             for chk in self.rlp_tabs_panel.GetChildren():
                 if chk.GetValue():
                     tab_list.append(chk.GetLabel())
-        filter_dict['tabs'] = tab_list
+        self.mr_label_dict['tabs'] = tab_list
         if self.rlp_actor_panel.IsShown():
             for rdo in self.rlp_actor_panel.GetChildren():
                 if rdo.GetValue():
-                    filter_dict['actor'] = rdo.GetLabel()
-        self.movie_dict['rider']['movie'] = self.tcl['rider'].get_movie_rider_pics(filter_dict)
-        print(filter_dict)
+                    self.mr_label_dict['actor'] = rdo.GetLabel()
+
+        self.mr_movie_list = self.movie_task.get_movie_rider_pics(self.mr_label_dict, self.mr_pics_per_page)
+        self.mr_total_page = math.ceil(len(self.mr_movie_list) / self.mr_pics_per_page)
+        self.mr_current_page = min(self.mr_total_page, 1)
+        self.load_movie_rider_pictures()
         event.Skip()
 
     def mr_show_popup_menu(self, event):
@@ -233,7 +241,7 @@ class MainWindow(RootFrame):
         """
         sb = event.GetEventObject()
         index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
-        bitmap = get_fitted_bitmap(self.movie_dict['rider']['movie'][index][1], PICTURE_SIZE['rider'], 'left')
+        bitmap = get_fitted_bitmap(self.mr_movie_list[index][1], PICTURE_SIZE['rider'], 'left')
         sb.SetBitmap(bitmap)
         # tw = wx.TipWindow(sb, self.movie_dict['rider']['pics'][index][0])
         # tw.SetBoundingRect(wx.Rect(sb.GetScreenPosition(), sb.GetBitmap().GetSize()))
@@ -246,7 +254,7 @@ class MainWindow(RootFrame):
         """
         sb = event.GetEventObject()
         index = list(self.rcp_scrolled_window.GetChildren()).index(sb)
-        bitmap = get_fitted_bitmap(self.movie_dict['rider']['movie'][index][1], PICTURE_SIZE['rider'], 'right')
+        bitmap = get_fitted_bitmap(self.mr_movie_list[index][1], PICTURE_SIZE['rider'], 'right')
         sb.SetBitmap(bitmap)
 
     def mr_popup_item_selected(self, event):

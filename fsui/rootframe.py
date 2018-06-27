@@ -67,13 +67,12 @@ class RootFrame(wx.Frame):
         self.rlp_tabs_text.Wrap(-1)
         rlp_tabs_sizer.Add(self.rlp_tabs_text, 0, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 1)
 
-        self.rlp_bk_text = wx.StaticText(self.rlp_tabs, wx.ID_ANY, u"                                         ",
-                                         wx.DefaultPosition, wx.DefaultSize, 0)
-        self.rlp_bk_text.Wrap(-1)
-        rlp_tabs_sizer.Add(self.rlp_bk_text, 0, wx.ALL, 5)
+        rlp_clear_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.rlp_clear_btn = wx.Button(self.rlp_tabs, wx.ID_ANY, u"Clear", wx.DefaultPosition, wx.Size(50, -1), 0)
-        rlp_tabs_sizer.Add(self.rlp_clear_btn, 0, wx.ALIGN_CENTER | wx.ALL, 0)
+        rlp_clear_sizer.Add(self.rlp_clear_btn, 0, wx.ALIGN_RIGHT | wx.ALL, 0)
+
+        rlp_tabs_sizer.Add(rlp_clear_sizer, 1, wx.EXPAND, 1)
 
         self.rlp_tabs.SetSizer(rlp_tabs_sizer)
         self.rlp_tabs.Layout()
@@ -133,30 +132,38 @@ class RootFrame(wx.Frame):
 
         rcp_page_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.rcp_text = wx.StaticText(self.rcp_page_panel, wx.ID_ANY,
-                                      u"There are 0 movies in total, 0 pages in total.          Jump to page: ",
-                                      wx.DefaultPosition, wx.DefaultSize, 0)
-        self.rcp_text.Wrap(-1)
-        rcp_page_sizer.Add(self.rcp_text, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+        rcp_search_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.rider_search = wx.SearchCtrl(self.rcp_page_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition,
+                                          wx.DefaultSize, 0)
+        self.rider_search.ShowSearchButton(True)
+        self.rider_search.ShowCancelButton(False)
+        rcp_search_sizer.Add(self.rider_search, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+
+        rcp_page_sizer.Add(rcp_search_sizer, 1, wx.EXPAND, 5)
+
+        self.rcp_page_text = wx.StaticText(self.rcp_page_panel, wx.ID_ANY, u"0 / 0 Pages ", wx.DefaultPosition,
+                                           wx.DefaultSize, 0)
+        self.rcp_page_text.Wrap(-1)
+        rcp_page_sizer.Add(self.rcp_page_text, 0, wx.ALIGN_CENTER, 5)
+
+        self.rcp_prev_btn = wx.Button(self.rcp_page_panel, wx.ID_ANY, u"Prev", wx.DefaultPosition, wx.DefaultSize, 0)
+        rcp_page_sizer.Add(self.rcp_prev_btn, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+
+        self.rcp_next_btn = wx.Button(self.rcp_page_panel, wx.ID_ANY, u"Next", wx.DefaultPosition, wx.DefaultSize, 0)
+        rcp_page_sizer.Add(self.rcp_next_btn, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+
+        self.rcp_jump_text = wx.StaticText(self.rcp_page_panel, wx.ID_ANY, u" Jump To:", wx.DefaultPosition,
+                                           wx.DefaultSize, 0)
+        self.rcp_jump_text.Wrap(-1)
+        rcp_page_sizer.Add(self.rcp_jump_text, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
         self.rcp_text_ctrl = wx.TextCtrl(self.rcp_page_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition,
-                                         wx.DefaultSize, 0)
+                                         wx.Size(50, -1), 0)
         rcp_page_sizer.Add(self.rcp_text_ctrl, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
-        self.rcp_jump_btn = wx.Button(self.rcp_page_panel, wx.ID_ANY, u"Go", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.rcp_jump_btn = wx.Button(self.rcp_page_panel, wx.ID_ANY, u"Go", wx.DefaultPosition, wx.Size(30, -1), 0)
         rcp_page_sizer.Add(self.rcp_jump_btn, 0, wx.ALIGN_CENTER | wx.ALL, 5)
-
-        self.rcp_staticline = wx.StaticLine(self.rcp_page_panel, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1, 50),
-                                            wx.LI_VERTICAL)
-        rcp_page_sizer.Add(self.rcp_staticline, 0, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 5)
-
-        self.rcp_pageup_btn = wx.Button(self.rcp_page_panel, wx.ID_ANY, u"PageUp", wx.DefaultPosition, wx.DefaultSize,
-                                        0)
-        rcp_page_sizer.Add(self.rcp_pageup_btn, 0, wx.ALIGN_CENTER | wx.ALL, 5)
-
-        self.rcp_pagedown_btn = wx.Button(self.rcp_page_panel, wx.ID_ANY, u"PageDown", wx.DefaultPosition,
-                                          wx.DefaultSize, 0)
-        rcp_page_sizer.Add(self.rcp_pagedown_btn, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
         self.rcp_page_panel.SetSizer(rcp_page_sizer)
         self.rcp_page_panel.Layout()
@@ -242,11 +249,13 @@ class RootFrame(wx.Frame):
         self.rlp_tabs.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_tabs_bmp.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_tabs_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
-        self.rlp_bk_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_clear_btn.Bind(wx.EVT_BUTTON, self.mr_clear_tabs)
         self.rlp_actor.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_actor_bmp.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
         self.rlp_actor_text.Bind(wx.EVT_LEFT_UP, self.mr_show_hide_panel)
+        self.rcp_prev_btn.Bind(wx.EVT_BUTTON, self.mr_prev_page)
+        self.rcp_next_btn.Bind(wx.EVT_BUTTON, self.mr_next_page)
+        self.rcp_jump_btn.Bind(wx.EVT_BUTTON, self.mr_jump_page)
         self.Bind(wx.EVT_MENU, self.on_mm_add_movie, id=self.mm_add_movie.GetId())
         self.Bind(wx.EVT_MENU, self.on_mm_add_movie_folder, id=self.mm_add_folder.GetId())
         self.Bind(wx.EVT_MENU, self.on_mh_about, id=self.mh_about.GetId())
@@ -265,6 +274,15 @@ class RootFrame(wx.Frame):
         event.Skip()
 
     def mr_clear_tabs(self, event):
+        event.Skip()
+
+    def mr_prev_page(self, event):
+        event.Skip()
+
+    def mr_next_page(self, event):
+        event.Skip()
+
+    def mr_jump_page(self, event):
         event.Skip()
 
     def on_mm_add_movie(self, event):
