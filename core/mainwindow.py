@@ -120,7 +120,7 @@ class MainWindow(RootFrame):
         """
         # calculate row and column counts
         movie_list = self.mr_movie_list[self.mr_current_page * self.mr_pics_per_page:
-                                        self.mr_current_page * self.mr_pics_per_page + self.mr_pics_per_page]
+                                        (self.mr_current_page * self.mr_pics_per_page + self.mr_pics_per_page)]
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
         col_count = max(math.floor(width / (PICTURE_SIZE['rider'][0] + PICTURE_GAP['rider'][1])), 1)
@@ -189,11 +189,14 @@ class MainWindow(RootFrame):
         self.mr_filter_rider(event)
 
     def mr_prev_page(self, event):
-
-        event.Skip()
+        if self.mr_current_page > 1:
+            self.mr_current_page -= 1
+        self.mr_update_pic_pages()
 
     def mr_next_page(self, event):
-        event.Skip()
+        if self.mr_current_page < self.mr_total_page:
+            self.mr_current_page += 1
+        self.mr_update_pic_pages()
 
     def mr_jump_page(self, event):
         event.Skip()
