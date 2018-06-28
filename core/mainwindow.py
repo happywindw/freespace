@@ -121,12 +121,10 @@ class MainWindow(RootFrame):
         :return:
         """
         # calculate row and column counts
-        movie_list = self.mr_movie_list[self.mr_current_page * self.mr_pics_per_page:
-                                        (self.mr_current_page * self.mr_pics_per_page + self.mr_pics_per_page)]
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
         col_count = max(math.floor(width / (PICTURE_SIZE['rider'][0] + PICTURE_GAP['rider'][1])), 1)
-        row_count = max(math.ceil(len(movie_list) / col_count), 1)
+        row_count = max(math.ceil(len(self.mr_movie_list) / col_count), 1)
         rp_sizer = self.rcp_scrolled_window.GetSizer()
         if rp_sizer:
             rp_sizer.SetRows(row_count)
@@ -136,7 +134,7 @@ class MainWindow(RootFrame):
         # add new pictures on panel
         child_list = self.rcp_scrolled_window.GetChildren()
         child_count = len(child_list)
-        for i, pic in enumerate(movie_list):
+        for i, pic in enumerate(self.mr_movie_list):
             pic = pic[1] if os.path.exists(pic[1]) else './test/temp.jpg'
             bitmap = get_fitted_bitmap(pic, PICTURE_SIZE['rider'], 'right')
             if i < child_count:
@@ -159,7 +157,6 @@ class MainWindow(RootFrame):
         # layout and fit
         self.rcp_scrolled_window.SetSizer(rp_sizer)
         self.rcp_scrolled_window.Layout()
-        # rp_sizer.Fit(self.rcp_scrolled_window)
         rp_sizer.FitInside(self.rcp_scrolled_window)
 
     def mr_show_hide_panel(self, event):
@@ -225,11 +222,7 @@ class MainWindow(RootFrame):
     def mr_update_pic_pages(self):
         res_tuple = self.movie_task.get_movie_rider_pics(
             self.mr_label_dict, self.mr_pics_per_page, self.mr_current_page)
-        print(self.mr_current_page, res_tuple)
         self.mr_total_num, self.mr_total_page, self.mr_movie_list = res_tuple
-        # self.mr_total_page = math.ceil(len(self.mr_movie_list) / self.mr_pics_per_page)
-
-        # self.mr_current_page = min(self.mr_total_page, 1)
         self.mr_current_page = max(self.mr_current_page, -1)
         self.mr_total_page = max(self.mr_total_page, 0)
         self.rcp_page_text.SetLabel('%d / %d Pages' % (self.mr_current_page + 1, self.mr_total_page))
