@@ -1,3 +1,4 @@
+import math
 
 
 class TaskCenter(object):
@@ -9,6 +10,14 @@ class TaskCenter(object):
 class MovieTask(TaskCenter):
     def __init__(self):
         super().__init__()
+        import random
+        # self.ml = [('sss', './temp/test.jpg')] * random.randint(1, 30 * 5)
+        num = random.randint(0, 200)
+        i = 0
+        self.ml = []
+        while i < num:
+            self.ml.append(('S' + str(i), './temp/test.jpg'))
+            i += 1
         pass
 
     def get_movie_rider_tabs(self, tab_name):
@@ -23,6 +32,6 @@ class MovieTask(TaskCenter):
             tl.insert(0, 'All')
         return tl
 
-    def get_movie_rider_pics(self, filter_dict, pics_num, start_num=0):
-        import random
-        return [('sss', './temp/test.jpg')] * random.randint(1, pics_num * 5)
+    def get_movie_rider_pics(self, filter_dict, pics_per_page, current_page=0):
+        return len(self.ml), math.ceil(len(self.ml) / pics_per_page), \
+               self.ml[current_page * pics_per_page: current_page * pics_per_page + pics_per_page]

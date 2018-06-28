@@ -15,10 +15,12 @@ class MainWindow(RootFrame):
         # init widgets on movie page
         self.movie_task = MovieTask()
         self.mr_label_dict = {'tabs': [], 'actor': 'All'}
-        self.mr_movie_list = []
-        self.mr_current_page = 0
-        self.mr_total_page = 0
+
+        self.mr_total_num = 0
         self.mr_pics_per_page = 30
+        self.mr_total_page = 0
+        self.mr_current_page = 0
+        self.mr_movie_list = []
 
         self.rcp_popup_menu = wx.Menu()
         for text in ['Play', 'Detail', 'Edit', 'Open Dir', 'Delete']:
@@ -157,6 +159,7 @@ class MainWindow(RootFrame):
         # layout and fit
         self.rcp_scrolled_window.SetSizer(rp_sizer)
         self.rcp_scrolled_window.Layout()
+        # rp_sizer.Fit(self.rcp_scrolled_window)
         rp_sizer.FitInside(self.rcp_scrolled_window)
 
     def mr_show_hide_panel(self, event):
@@ -189,12 +192,12 @@ class MainWindow(RootFrame):
         self.mr_filter_rider(event)
 
     def mr_prev_page(self, event):
-        if self.mr_current_page > 1:
+        if self.mr_current_page > 0:
             self.mr_current_page -= 1
         self.mr_update_pic_pages()
 
     def mr_next_page(self, event):
-        if self.mr_current_page < self.mr_total_page:
+        if self.mr_current_page < self.mr_total_page - 1:
             self.mr_current_page += 1
         self.mr_update_pic_pages()
 
@@ -220,10 +223,16 @@ class MainWindow(RootFrame):
         event.Skip()
 
     def mr_update_pic_pages(self):
-        self.mr_movie_list = self.movie_task.get_movie_rider_pics(self.mr_label_dict, self.mr_pics_per_page)
-        self.mr_total_page = math.ceil(len(self.mr_movie_list) / self.mr_pics_per_page)
-        self.mr_current_page = min(self.mr_total_page, 1)
-        self.rcp_page_text.SetLabel('%d / %d Pages' % (self.mr_current_page, self.mr_total_page))
+        res_tuple = self.movie_task.get_movie_rider_pics(
+            self.mr_label_dict, self.mr_pics_per_page, self.mr_current_page)
+        print(self.mr_current_page, res_tuple)
+        self.mr_total_num, self.mr_total_page, self.mr_movie_list = res_tuple
+        # self.mr_total_page = math.ceil(len(self.mr_movie_list) / self.mr_pics_per_page)
+
+        # self.mr_current_page = min(self.mr_total_page, 1)
+        self.mr_current_page = max(self.mr_current_page, -1)
+        self.mr_total_page = max(self.mr_total_page, 0)
+        self.rcp_page_text.SetLabel('%d / %d Pages' % (self.mr_current_page + 1, self.mr_total_page))
         self.load_movie_rider_pictures()
 
     def mr_show_popup_menu(self, event):
