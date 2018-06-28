@@ -44,7 +44,7 @@ class MovieDialog(wx.Dialog):
         self.detail_panel.SetSizer(d_sizer)
         self.detail_panel.Layout()
         d_sizer.Fit(self.detail_panel)
-        self.movie_notebook.AddPage(self.detail_panel, u"Deatil", True)
+        self.movie_notebook.AddPage(self.detail_panel, u"Detail", False)
         self.modify_panel = wx.Panel(self.movie_notebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                      wx.TAB_TRAVERSAL)
         modify_sizer = wx.GridBagSizer(0, 0)
@@ -54,7 +54,7 @@ class MovieDialog(wx.Dialog):
         self.modify_panel.SetSizer(modify_sizer)
         self.modify_panel.Layout()
         modify_sizer.Fit(self.modify_panel)
-        self.movie_notebook.AddPage(self.modify_panel, u"Modify", False)
+        self.movie_notebook.AddPage(self.modify_panel, u"Modify", True)
 
         movie_sizer.Add(self.movie_notebook, 1, wx.EXPAND | wx.ALL, 5)
 
