@@ -120,6 +120,7 @@ class MainWindow(RootFrame):
         load and show pictures on rcp_scrolled_window
         :return:
         """
+        self.SetCursor(wx.Cursor(wx.CURSOR_WAIT))
         # calculate row and column counts
         width = self.rider_content_panel.GetSize()[0] - 20  # fixed width of rcp_scrolled_window
         self.rcp_scrolled_window.SetMinSize(wx.Size(width, -1))
@@ -158,6 +159,7 @@ class MainWindow(RootFrame):
         self.rcp_scrolled_window.SetSizer(rp_sizer)
         self.rcp_scrolled_window.Layout()
         rp_sizer.FitInside(self.rcp_scrolled_window)
+        self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
 
     def mr_show_hide_panel(self, event):
         """
