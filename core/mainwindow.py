@@ -191,6 +191,11 @@ class MainWindow(RootFrame):
         self.mr_filter_rider(event)
 
     def mr_prev_page(self, event):
+        """
+        jump to prev page
+        :param event:
+        :return:
+        """
         if self.mr_current_page > 1:
             self.mr_current_page -= 1
         else:
@@ -198,6 +203,11 @@ class MainWindow(RootFrame):
         self.mr_update_pic_pages()
 
     def mr_next_page(self, event):
+        """
+        jump to next page
+        :param event:
+        :return:
+        """
         if self.mr_current_page < self.mr_total_page:
             self.mr_current_page += 1
         else:
@@ -205,6 +215,11 @@ class MainWindow(RootFrame):
         self.mr_update_pic_pages()
 
     def mr_jump_page(self, event):
+        """
+        jump to specified page
+        :param event:
+        :return:
+        """
         try:
             if not self.rcp_text_ctrl.GetValue():
                 return
@@ -241,11 +256,13 @@ class MainWindow(RootFrame):
         event.Skip()
 
     def mr_update_pic_pages(self):
+        """
+        update rider movies' pics
+        :return:
+        """
         res_tuple = self.movie_task.get_movie_rider_pics(
             self.mr_label_dict, self.mr_pics_per_page, self.mr_current_page)
         self.mr_total_num, self.mr_total_page, self.mr_movie_list = res_tuple
-        # self.mr_current_page = max(self.mr_current_page, -1)
-        # self.mr_total_page = max(self.mr_total_page, 0)
         self.rcp_page_text.SetLabel('%d / %d Pages' % (self.mr_current_page, self.mr_total_page))
         self.load_movie_rider_pictures()
 
