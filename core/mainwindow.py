@@ -18,8 +18,8 @@ class MainWindow(RootFrame):
 
         self.mr_total_num = 0
         self.mr_pics_per_page = 30
-        self.mr_total_page = 0
-        self.mr_current_page = 0
+        self.mr_total_page = 1
+        self.mr_current_page = 1
         self.mr_movie_list = []
 
         self.rcp_popup_menu = wx.Menu()
@@ -189,17 +189,36 @@ class MainWindow(RootFrame):
         self.mr_filter_rider(event)
 
     def mr_prev_page(self, event):
-        if self.mr_current_page > 0:
+        if self.mr_current_page > 1:
             self.mr_current_page -= 1
+        else:
+            return
         self.mr_update_pic_pages()
 
     def mr_next_page(self, event):
-        if self.mr_current_page < self.mr_total_page - 1:
+        if self.mr_current_page < self.mr_total_page:
             self.mr_current_page += 1
+        else:
+            return
         self.mr_update_pic_pages()
 
     def mr_jump_page(self, event):
-        event.Skip()
+        try:
+            if not self.rcp_text_ctrl.GetValue():
+                return
+            jump_page = int(self.rcp_text_ctrl.GetValue())
+            if jump_page == self.mr_current_page:
+                return
+            elif jump_page < 1 or jump_page >= self.mr_total_page + 1:
+                return
+            else:
+                self.mr_current_page = jump_page
+                self.mr_update_pic_pages()
+        except ValueError:
+            wx.MessageBox('请输入正确的数字！')
+            self.rcp_text_ctrl.Clear()
+            self.rcp_text_ctrl.SetFocus()
+            return
 
     def mr_filter_rider(self, event):
         """
@@ -223,9 +242,9 @@ class MainWindow(RootFrame):
         res_tuple = self.movie_task.get_movie_rider_pics(
             self.mr_label_dict, self.mr_pics_per_page, self.mr_current_page)
         self.mr_total_num, self.mr_total_page, self.mr_movie_list = res_tuple
-        self.mr_current_page = max(self.mr_current_page, -1)
-        self.mr_total_page = max(self.mr_total_page, 0)
-        self.rcp_page_text.SetLabel('%d / %d Pages' % (self.mr_current_page + 1, self.mr_total_page))
+        # self.mr_current_page = max(self.mr_current_page, -1)
+        # self.mr_total_page = max(self.mr_total_page, 0)
+        self.rcp_page_text.SetLabel('%d / %d Pages' % (self.mr_current_page, self.mr_total_page))
         self.load_movie_rider_pictures()
 
     def mr_show_popup_menu(self, event):

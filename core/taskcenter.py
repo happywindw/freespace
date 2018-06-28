@@ -34,4 +34,4 @@ class MovieTask(TaskCenter):
 
     def get_movie_rider_pics(self, filter_dict, pics_per_page, current_page=0):
         return len(self.ml), math.ceil(len(self.ml) / pics_per_page), \
-               self.ml[current_page * pics_per_page: current_page * pics_per_page + pics_per_page]
+               self.ml[(current_page-1) * pics_per_page: (current_page-1) * pics_per_page + pics_per_page]
