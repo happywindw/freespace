@@ -2,6 +2,7 @@ import math
 import os
 import wx
 
+from core.subwindows import DetailEditDialog
 from core.taskcenter import MovieTask
 from core.utils import get_fitted_bitmap
 from fsui.rootframe import RootFrame
@@ -9,6 +10,7 @@ from settings import PICTURE_SIZE, PICTURE_GAP
 
 
 class MainWindow(RootFrame):
+    """the main window of the program"""
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -307,7 +309,19 @@ class MainWindow(RootFrame):
         :return:
         """
         item = self.rcp_popup_menu.FindItemById(event.GetId())
-        wx.MessageBox("You selected item '%s'" % item.GetText())
+
+        if item.GetText() == 'Play':
+            pass
+        elif item.GetText() == 'Detail':
+            dl = DetailEditDialog(self)
+            dl.ShowModal()
+        elif item.GetText() == 'Edit':
+            dl = DetailEditDialog(self)
+            dl.ShowModal()
+        elif item.GetText() == 'Open Dir':
+            pass
+        elif item.GetText() == 'Delete':
+            pass
 
     def on_mm_add_movie(self, event):
         """
